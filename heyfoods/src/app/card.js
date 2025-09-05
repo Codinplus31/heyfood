@@ -42,6 +42,46 @@ export default function Cards({data}) {
 //     "genre": ["Say no to Market Stress🙅‍♀️", "Party Jollof in IB", "Free drinks for you! 🥂"]
 //   }
 // ];
+
+// Utility function
+function getRestaurantStatus(open_time, close_time) {
+  const now = new Date();
+
+  const [openHour, openMinute] = open_time.split(":").map(Number);
+  const [closeHour, closeMinute] = close_time.split(":").map(Number);
+
+  const openTime = new Date();
+  openTime.setHours(openHour, openMinute, 0, 0);
+
+  const closeTime = new Date();
+  closeTime.setHours(closeHour, closeMinute, 0, 0);
+
+  let label = "";
+  let bgColor = "";
+
+  if (now < openTime) {
+    label = `Opens at ${openHour % 12 || 12}:${openMinute
+      .toString()
+      .padStart(2, "0")} ${openHour >= 12 ? "PM" : "AM"}`;
+    bgColor = "#FFA900";
+  } else if (now >= closeTime) {
+    label = "Currently Closed";
+    bgColor = "#FF6A5E";
+  } else if (closeTime - now <= 3 * 60 * 60 * 1000) {
+    label = `Closes at ${closeHour % 12 || 12}:${closeMinute
+      .toString()
+      .padStart(2, "0")} ${closeHour >= 12 ? "PM" : "AM"}`;
+    bgColor = "#00A205";
+  } else {
+    label = "Open Now";
+    bgColor = "#00A205";
+  }
+
+  return { label, bgColor };
+}
+
+
+  
   const scrollRef = useRef(null);
 
   const handleScroll = (direction) => {
@@ -167,7 +207,7 @@ export default function Cards({data}) {
                   {e.discount}
                 </Typography>}
                 
-                <Typography
+{/*  <Typography
                   component="span"
                   variant="body1"
                   sx={{
@@ -181,7 +221,31 @@ export default function Cards({data}) {
                   }}
                 >
                   Opens at {e.open_time} AM
-                </Typography>
+                </Typography> */}
+
+{(() => {
+    const { label, bgColor } = getRestaurantStatus(e.open_time, e.close_time);
+    return (
+      <Typography
+        key={e.id}
+        component="span"
+        variant="body1"
+        sx={{
+          background: bgColor,
+          paddingInline: "10px",
+          paddingBlock: "6px",
+          borderRadius: "0.3em",
+          position: "absolute",
+          bottom: "50px",
+          fontSize: "92%",
+        }}
+      >
+        {label}
+      </Typography>
+    );
+  })()}
+
+                    
               </CardContent>
             </Card>
             <Card elevation={0} sx={{ marginTop: "1em" }}>
