@@ -1,4 +1,4 @@
-import { useRef } from 'react';
+import { useRef} from 'react';
 import {
   Box,
   Typography,
@@ -11,9 +11,37 @@ import {
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 
-export default function Cards() {
-  let arr = [0, 0, 0, 0, 0];
 
+export default function Cards({data}) {
+  let arr = [0, 0, 0, 0, 0];
+// const vendors = [
+//   {
+//     "id": 1,
+//     "name": "AVO Cuisine",
+//     "tag": ["Rice", "Chicken", "Shawarma"],
+//     "stars": "0",
+//     "rating": "5",
+//     "img": "https://firebasestorage.googleapis.com/...",
+//     "open_time": "08:00:00",
+//     "close_time": "21:00:00",
+//     "discount": null,
+//     "tag_id": [1, 2, 3],
+//     "genre": ["Spend Less, Order More!🤩", "Free drinks for you! 🥂"]
+//   },
+//   {
+//     "id": 2,
+//     "name": "Chibest Restaurants",
+//     "tag": ["Native corner"],
+//     "stars": "1",
+//     "rating": "1.5",
+//     "img": "https://firebasestorage.googleapis.com/...",
+//     "open_time": "08:00:00",
+//     "close_time": "22:00:00",
+//     "discount": null,
+//     "tag_id": [36],
+//     "genre": ["Say no to Market Stress🙅‍♀️", "Party Jollof in IB", "Free drinks for you! 🥂"]
+//   }
+// ];
   const scrollRef = useRef(null);
 
   const handleScroll = (direction) => {
@@ -30,9 +58,17 @@ export default function Cards() {
   return (
     <Box sx={{ width: {xs: "100%", sm:"94%"}, marginBottom: "4em", marginLeft: "1em" }}>
       <Stack direction="row" justifyContent="space-between">
+        <Box >
         <Typography variant="h4" sx={{ fontSize: "175%", fontWeight: 600 }}>
-          Spend Less, Order More!🤩
+          {data.genre}
         </Typography>
+          <Typography
+                variant="body2"
+                sx={{ color: "#757575", marginBottom: "0.3em" }}
+              >
+                Goat meat, Soup bowl
+              </Typography>
+        </Box>
         <Box
           sx={{
             width: "max-content",
@@ -75,16 +111,22 @@ export default function Cards() {
           height: "max-content",
           marginTop: "20px",
           display: "flex",
-          justifyContent: "space-between",
-          gap: "4em",
+          // gap: "4em",
           overflowX: "auto",
           scrollBehavior: "smooth",
           '&::-webkit-scrollbar': { display: 'none' },
         }}
       >
-        {arr.map((e, index) => (
-          <Box key={index} sx={{ width: {lg:' 26.5vw', xs: '34.5vw'}, minWidth: {xs: "48%",  
-            lg: "26.5vw"}, height: "max-content" }}>
+        {data.vendors.map((e, index) => (
+          <Box key={index} sx={{ 
+            // width: {lg:' 26.5vw', xs: '34.5vw'}, minWidth: {xs: "48%",  
+            // lg: "26.5vw"},
+            flex: "0 0 auto", // prevent shrinking
+    flexBasis: { xs: '21.5vw', lg: "34.5vw" },
+    mr: { xs: "1em", lg: "0.3em" },
+             height: "max-content",
+              // mr: { xs: "1em", lg: "2em" }, 
+              }}>
             <Card
               elevation={0}
               sx={{
@@ -94,6 +136,7 @@ export default function Cards() {
                 aspectRatio: 2.66667 / 1,
                 height: "122px",
                 color: "white",
+                width: "100%"
               }}
             >
               <CardContent
@@ -101,9 +144,10 @@ export default function Cards() {
                   marginTop: "auto",
                   position: "relative",
                   height: "100%",
+                  width: "100%"
                 }}
               >
-                <Typography
+                {e.discount && <Typography
                   component="span"
                   variant="body1"
                   sx={{
@@ -120,8 +164,9 @@ export default function Cards() {
                     borderRadius: "3em",
                   }}
                 >
-                  ₦500 off order
-                </Typography>
+                  {e.discount}
+                </Typography>}
+                
                 <Typography
                   component="span"
                   variant="body1"
@@ -135,7 +180,7 @@ export default function Cards() {
                     fontSize: "92%",
                   }}
                 >
-                  Opens at 09:00 AM
+                  Opens at {e.open_time} AM
                 </Typography>
               </CardContent>
             </Card>
@@ -145,25 +190,21 @@ export default function Cards() {
                 sx={{ fontWeight: 500, color: "black", marginBottom: "0.3em" }}
                 noWrap
               >
-                Ile Iyan bodija
+                {e.name}
               </Typography>
               <Typography
                 variant="body2"
                 sx={{ color: "#757575", marginBottom: "0.3em" }}
               >
-                Goat meat, Soup bowl
+                {e.tag.join(", ")}
               </Typography>
-              <Box
-                sx={{
-                  display: "flex",
-                  alignItems: "center",
-                  gap: "9px",
-                  marginBottom: "0.3em",
-                }}
-              >
-                <span>⭐ 3.6</span>
-                <span>737+ Ratings</span>
-              </Box>
+              <Box sx={{display: "flex", alignItems: "center", gap: "9px", marginBottom: "0.3em"}}> 
+                <div style={{display: "flex", gap: "5px"}}> 
+                  <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg"> <g clip-path="url(#clip0_10996_11354)"> <path d="M15.9644 6.14218C15.8788 5.87882 15.6512 5.68688 15.3772 5.64711L10.7305 4.97199L8.65232 0.76097C8.52978 0.512684 8.27689 0.355469 8.00004 0.355469C7.72314 0.355469 7.47025 0.512684 7.34775 0.76097L5.26976 4.97194L0.622883 5.64707C0.348895 5.68688 0.121219 5.87882 0.0356762 6.14214C-0.0498662 6.4055 0.0214676 6.69457 0.219757 6.88782L3.58224 10.1651L2.78816 14.7936C2.74137 15.0665 2.85353 15.3423 3.07752 15.505C3.20423 15.5971 3.35432 15.644 3.50514 15.644C3.62089 15.644 3.73713 15.6164 3.84357 15.5604L7.99999 13.3754L12.1564 15.5604C12.2634 15.6167 12.3807 15.6435 12.4968 15.644C12.8981 15.6434 13.2232 15.318 13.2232 14.9166C13.2232 14.8607 13.2169 14.8063 13.205 14.754L12.4178 10.1651L15.7803 6.88782C15.9786 6.69457 16.0499 6.4055 15.9644 6.14218Z" fill="#3BB987"/> </g> <defs> <clipPath id="clip0_10996_11354"> <rect width="16" height="16" fill="white"/> </clipPath> </defs> </svg> 
+                  <span>{e.stars}</span> 
+                </div> 
+                 <span>{e.rating}+ Ratings</span> 
+                </Box>
             </Card>
           </Box>
         ))}

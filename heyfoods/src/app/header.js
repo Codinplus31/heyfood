@@ -6,16 +6,22 @@ import Toolbar from '@mui/material/Toolbar';
 import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
 import Button from '@mui/material/Button';
+import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import InputBase from '@mui/material/InputBase';
 import Badge from '@mui/material/Badge';
-import { InputAdornment } from '@mui/material';
+import { InputAdornment, Drawer, List, ListItem, ListItemText, Divider, Radio,
+  RadioGroup,
+  FormControlLabel,
+  FormControl,
+  FormLabel, Stack } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
 import CloseIcon from '@mui/icons-material/Close';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import { styled, alpha } from '@mui/material/styles';
 import LocationOnIcon from '@mui/icons-material/LocationOn';
 import Link from 'next/link';
+import LockOpenIcon from '@mui/icons-material/LockOpen';
 
 // Styled components
 const StyledAppBar = styled(AppBar)(({ theme }) => ({
@@ -62,18 +68,121 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 
 export default function Header() {
   const [searchValue, setSearchValue] = useState('');
+const [drawerOpen, setDrawerOpen] = useState(false); // <-- Drawer state
+  const [sortKey, setSortKey] = useState("Most Popular");
+
+  const toggleDrawer = (open) => (event) => {
+    if (event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
+      return;
+    }
+    setDrawerOpen(open);
+  };
+
+const drawerContent = (
+    <Box
+      sx={{ width: 250 }}
+      role="presentation"
+      onClick={toggleDrawer(false)}
+      onKeyDown={toggleDrawer(false)}
+    >
+      <IconButton sx={{ml: '80%'}}>
+        <CloseIcon />
+      </IconButton>
+      <List>
+        
+        <ListItem  button>
+          <LockOpenIcon />
+
+          <span style={{marginLeft: "1em", fontSize: "1rem", fontWeight: 400}}>Sign in</span>
+        </ListItem>
+        <ListItem button>
+          <ListItemText primary="Add your restaurant" primaryTypographyProps={{
+      sx: {
+        fontSize: '80%', // smaller font size
+        fontWeight: 'bold',  // make it bold
+      }
+    }}/>
+        </ListItem>
+        <ListItem button>
+          <ListItemText primary="Become a delivery rider" primaryTypographyProps={{
+      sx: {
+        fontSize: '80%', // smaller font size
+        fontWeight: 'bold',  // make it bold
+      }
+    }} />
+        </ListItem>
+        <ListItem button>
+          <ListItemText primary="Go to Homepage" primaryTypographyProps={{
+      sx: {
+        fontSize: '80%', // smaller font size
+        fontWeight: 'bold',  // make it bold
+      }
+    }} />
+        </ListItem>
+      </List>
+      <Box>
+        <Box sx={{display: "flex", width: "90%"}}>
+          <img /> 
+          <span>Experience the
+Heyfood mobile app</span> 
+        </Box>
+        <Box sx={{display: "flex", width: "90%"}}>
+<Button
+              variant="contained"
+              disableElevation
+              startIcon={<ShoppingCartIcon sx={{display: {xs: "none", sm: "block"}}} color="white" fontSize="small" />}
+       
+
+                sx={{
+                bgcolor: 'common.black',
+                color: 'common.white',
+                padding: "8px 24px",
+                borderRadius: '5em',
+                '&:hover': {
+                  bgcolor: 'success.main', // Uses green from theme
+                }
+              }}
+            >
+              
+              <Typography component={'span'} variant='body2' sx={{display: {xs: "none", sm: "block"}}}>App store</Typography>
+            </Button>
+            <Button
+              variant="contained"
+              disableElevation
+              startIcon={<ShoppingCartIcon sx={{display: {xs: "none", sm: "block"}}} color="white" fontSize="small" />}
+       
+
+                sx={{
+                bgcolor: 'common.black',
+                color: 'common.white',
+                padding: "8px 24px",
+                borderRadius: '5em',
+                '&:hover': {
+                  bgcolor: 'success.main', // Uses green from theme
+                }
+              }}
+            >
+              
+              <Typography component={'span'} variant='body2' sx={{display: {xs: "none", sm: "block"}}}>Play Store</Typography>
+            </Button>
+
+        </Box>
+      </Box>
+    </Box>
+  );
 
   return (
-    <div id="theAppBarId" style={{width: "95%", borderBottom: "2px solid rgba(150, 150, 150, 0.1)"}}>
+    <div id="theAppBarId" style={{width: "100%", borderBottom: "2px solid rgba(150, 150, 150, 0.1)"}}>
       <Toolbar className="jss279" sx={{ justifyContent: 'space-between' }}>
         <div style={{ display: 'flex', alignItems: 'center',  }} className="jss283">
           {/* Menu Icon */}
-          <IconButton edge="start" color="" aria-label="menu" sx={{ textTransform: 'none', color: 'black',  }}>
+          <IconButton edge="start" color="" aria-label="menu"
+            onClick={toggleDrawer(true)} sx={{ textTransform: 'none', color: 'black',  }}>
             <MenuIcon width="50" height="50"/>
           </IconButton>
 
           {/* Logo */}
-          <LogoLink href="/stores">
+          <LogoLink sx={{display: {lg: "block",xs: 'none', sm: 'none', md: 'block'}}} href="/stores">
             <img src="/logo.svg" alt="logo" width="40" height="40" />
           </LogoLink>
 
@@ -91,7 +200,7 @@ export default function Header() {
         </div>
 
         {/* Search Bar */}
-        <div className="jss285" style={{borderRadius: "12rem", overflow:"hidden", width: "15%"}}>
+        <Box className="jss285" sx={{borderRadius: "12rem", overflow:"hidden", width: "15%", display: {xs: "none", sm: "block"} }}>
           <InputBase
   id="nonMobileSearchId"
   placeholder="Search restaurants or food"
@@ -114,7 +223,7 @@ export default function Header() {
     backgroundColor: '#F0F0F0'
   }}
 />
-        </div>
+        </Box>
 
         {/* Close Button (e.g., for mobile) */}
         {/* <IconButton
@@ -129,7 +238,7 @@ export default function Header() {
 
         {/* Sign In & Cart */}
         <div className="jss289 jss290" style={{ display: 'flex', alignItems: 'center', gap: 16 }}>
-          <Button variant="text" color="inherit" sx={{color: 'black', fontWeight: 400}}>
+          <Button variant="text" color="inherit" sx={{color: 'black', fontWeight: 400, display: {xs: "none", sm: "block"}}}>
             <Typography variant="body2" className="jss378">
               Sign In
             </Typography>
@@ -139,34 +248,104 @@ export default function Header() {
             <Button
               variant="contained"
               disableElevation
-              startIcon={<ShoppingCartIcon color="white" fontSize="small" />}
-              
-//               sx={{
-// color: "white",
-//     padding: "8px 24px",
-//     borderRadius: '5em',
-//     bgColor: 'green',
-//     // Text color for contrast
-//     '&:hover': {
-//       bgColor: 'gray', // Optional: hover effect
-//     },
-//   }}
+              startIcon={<ShoppingCartIcon sx={{display: {xs: "none", sm: "block"}}} color="white" fontSize="small" />}
+       
 
-  sx={{
-  bgcolor: 'common.black',
-  color: 'common.white',
-  padding: "8px 24px",
-  borderRadius: '5em',
-  '&:hover': {
-    bgcolor: 'success.main', // Uses green from theme
-  }
-}}
+                sx={{
+                bgcolor: 'common.black',
+                color: 'common.white',
+                padding: "8px 24px",
+                borderRadius: '5em',
+                '&:hover': {
+                  bgcolor: 'success.main', // Uses green from theme
+                }
+              }}
             >
-              <span className="jss354 jss378">Cart • 0</span>
+              <ShoppingCartIcon sx={{display: {xs: "block", sm: "none"}}} color="white" fontSize="small" />
+              <Typography component={'span'} variant='body2' sx={{display: {xs: "none", sm: "block"}}}>Cart • 0</Typography>
             </Button>
           </Badge>
         </div>
       </Toolbar>
+      <Toolbar sx={{justifyContent: "center", gap: "2em", display: {xs: "flex", sm: "none"}}} >
+        <Box className="jss285" sx={{borderRadius: "12rem", overflow:"hidden", width: "100%" }}>
+          <InputBase
+  id="nonMobileSearchId"
+  placeholder="Search restaurants or food"
+  type="search"
+  fullWidth
+  startAdornment={
+    <InputAdornment position="end" sx={{ ml: 1 }}>
+      <img src="/tiny-search.svg" alt="search" />
+    </InputAdornment>
+  }
+  sx={{
+    '& .MuiInputBase-input': {
+      padding: '0.5em 1.2em',
+
+    fontSize: '103%',
+    borderRadius: '3em',
+    letterSpacing: '-0.5px',
+    backgroundColor: '#F0F0F0',
+    },
+    backgroundColor: '#F0F0F0'
+  }}
+/>
+        </Box>
+
+        <IconButton>
+          <img src="/updown.svg" />
+        </IconButton>
+      </Toolbar>
+
+
+      <Drawer anchor="left" open={drawerOpen} onClose={toggleDrawer(false)}>
+        {drawerContent}
+      </Drawer>
+
+      <Box sx={{ p: 2, width: "90%", border: "1px solid red",  display: {
+      xs: "block",
+      sm:"none"
+    }, position: "absolute", top:"25%", left: "0px", overflow: "hidden", background: "white" }}>
+
+      <Box  sx={{width: "100%", display: "flex", justifyContent: "center", alignItems: "center", marginTop: "2px"}} >
+      <Box sx={{width: "100%",  display: "flex", justifyContent: "space-between", alignItems: "center"}} >
+        <Box >
+        <img src="/icons/new/sort-desc.svg" alt="sort" />
+        <Typography variant="h5" sx={{fontWeight: 800}}>Sort</Typography>
+        </Box>
+        <IconButton>
+          <img src="/updown.svg" />
+        </IconButton>
+      </Box>
+      </Box>
+
+      <FormControl component="fieldset" sx={{ mt: 2 }}>
+        <RadioGroup
+          name="sortKey"
+          value={sortKey}
+          onChange={(e) => setSortKey(e.target.value)}
+        >
+          <FormControlLabel
+            value="Most Popular"
+            control={<Radio sx={{background: "#efefef"}}/>}
+            label="Most Popular"
+          />
+          <FormControlLabel value="Nearest" control={<Radio />} label="Nearest" />
+          <FormControlLabel
+            value="Highest rated"
+            control={<Radio sx={{background: "#efefef"}}/>}
+            label="Highest rated"
+          />
+          <FormControlLabel value="Newest" control={<Radio />} label="Newest" />
+          <FormControlLabel
+            value="Most Rated"
+            control={<Radio sx={{background: "#efefef"}}/>}
+            label="Most Rated"
+          />
+        </RadioGroup>
+      </FormControl>
+    </Box>
     </div>
   );
 }
