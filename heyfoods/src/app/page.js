@@ -1,12 +1,13 @@
 "use client";
 import Image from "next/image";
 // import styles from "./page.module.css";
-
+import { Swiper, SwiperSlide } from 'swiper/react';
+import { Pagination } from 'swiper/modules';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import Card from '@mui/material/Card';
 import Container from '@mui/material/Container';
-import {Box, Stack, IconButton} from '@mui/material';
+import {Box, Stack, IconButton, useMediaQuery} from '@mui/material';
 import { ArrowBackIos, ArrowForwardIos } from "@mui/icons-material";
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
@@ -151,7 +152,23 @@ export default function Home() {
   },
   // ...add the rest here
 ];
- 
+
+const bannerRef = useRef(null);
+  const isMobile = useMediaQuery('(max-width:600px)');
+
+  const scrollLeft = () => {
+    if (bannerRef.current) {
+      bannerRef.current.scrollLeft -= 300;
+    }
+  };
+
+  const scrollRight = () => {
+    if (bannerRef.current) {
+      bannerRef.current.scrollLeft += 300;
+    }
+  };
+
+  
 const bannerRef = useRef(null);
 
   const scrollLeft = () => {
@@ -256,72 +273,100 @@ const bannerRef = useRef(null);
         display: 'flex',
         alignItems: 'center',
         position: 'relative',
-        overflow: 'hidden', // Prevent scrollbars from showing outside
+        overflow: 'hidden',
       }}
     >
-      {/* Left Arrow */}
-      <IconButton
-        onClick={scrollLeft}
-        sx={{
-          background: '#EEEEEE',
-          position: 'absolute',
-          left: '14px',
-          zIndex: 10,
-        }}
-      >
-        <ArrowBackIcon sx={{ color: 'black' }} />
-      </IconButton>
-
-      {/* Scrollable Banner */}
-      <Stack
-        ref={bannerRef}
-        className="banner"
-        direction="row"
-        spacing={2}
-        sx={{
-          overflowX: 'scroll',
-          height: '162px',
-          paddingLeft: '2.3rem',
-          scrollbarWidth: 'none', // Hide scrollbar for Firefox
-          '&::-webkit-scrollbar': {
-            display: 'none', // Hide scrollbar for Chrome/Safari
-          },
-          scrollBehavior: 'smooth',
-          gap: "2em"
-        }}
-        id="restaurantTags"
-      >
-
-        {ban.map((e, i)=>(
-
-        <Card
-        key={i}
-          sx={{
-            
-            height: '100%',
-            minWidth: {lg: '29.5vw', xs: '80%'},
-            borderRadius: '0.6em',
-                aspectRatio: 2.435 / 1
-          }}
+      {isMobile ? (
+        // Mobile View: Swiper with dots
+        <Swiper
+          modules={[Pagination]}
+          pagination={{ clickable: true }}
+          spaceBetween={20}
+          slidesPerView={1}
+          style={{ width: '100%', height: '162px' }}
         >
-          <img src={e} style={{width: "100%", height: "100%"}} />
-        </Card>
-        ))}
- 
-      </Stack>
+          {ban.map((e, i) => (
+            <SwiperSlide key={i}>
+              <Card
+                sx={{
+                  height: '100%',
+                  width: '100%',
+                  borderRadius: '0.6em',
+                  aspectRatio: 2.435 / 1,
+                }}
+              >
+                <img
+                  src={e}
+                  alt={`banner-${i}`}
+                  style={{ width: '100%', height: '100%', borderRadius: '0.6em' }}
+                />
+              </Card>
+            </SwiperSlide>
+          ))}
+        </Swiper>
+      ) : (
+        // Desktop View: Scrollable + Arrows
+        <>
+          <IconButton
+            onClick={scrollLeft}
+            sx={{
+              background: '#EEEEEE',
+              position: 'absolute',
+              left: '14px',
+              zIndex: 10,
+            }}
+          >
+            <ArrowBackIcon sx={{ color: 'black' }} />
+          </IconButton>
 
-      {/* Right Arrow */}
-      <IconButton
-        onClick={scrollRight}
-        sx={{
-          background: '#EEEEEE',
-          position: 'absolute',
-          right: '14px',
-          zIndex: 10,
-        }}
-      >
-        <ArrowForwardIcon sx={{ color: 'black' }} />
-      </IconButton>
+          <Stack
+            ref={bannerRef}
+            direction="row"
+            spacing={2}
+            sx={{
+              overflowX: 'scroll',
+              height: '162px',
+              paddingLeft: '2.3rem',
+              scrollbarWidth: 'none',
+              '&::-webkit-scrollbar': {
+                display: 'none',
+              },
+              scrollBehavior: 'smooth',
+              gap: '2em',
+            }}
+          >
+            {ban.map((e, i) => (
+              <Card
+                key={i}
+                sx={{
+                  height: '100%',
+                  minWidth: { lg: '29.5vw', xs: '80%' },
+                  borderRadius: '0.6em',
+                  aspectRatio: 2.435 / 1,
+                }}
+              >
+                <img
+                  src={e}
+                  alt={`banner-${i}`}
+                  style={{ width: '100%', height: '100%', borderRadius: '0.6em' }}
+                />
+              </Card>
+            ))}
+          </Stack>
+
+          <IconButton
+            onClick={scrollRight}
+            sx={{
+              background: '#EEEEEE',
+              position: 'absolute',
+              right: '14px',
+              zIndex: 10,
+            }}
+          >
+            <ArrowForwardIcon sx={{ color: 'black' }} />
+          </IconButton>
+        </>
+      )}
     </Box>
 
       <Main />
