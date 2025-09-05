@@ -12,7 +12,11 @@ export default function Cards() {
 
   return (
     <Box sx={{ width: "100%" }}>
-      <Stack direction="row" justifyContent="space-between">
+      <Stack
+        direction="row"
+        justifyContent="space-between"
+        sx={{ width: "95%", margin: "0 auto" }}
+      >
         <Typography variant="h4" sx={{ fontSize: "175%", fontWeight: 600 }}>
           Spend Less, Order More!🤩
         </Typography>
@@ -23,20 +27,31 @@ export default function Cards() {
 
       {/* ✅ Responsive Grid Layout */}
       <Box
-        sx={{
-          display: "grid",
-          gridTemplateColumns: {
-            xs: "repeat(2, 1fr)",   // mobile/tablet (<= 1299px)
-            lg: "repeat(3, 1fr)",   // large screens (> 1299px)
-          },
-          gap: "1.5em",
-          marginTop: "20px",
-          width: "90%",
-        }}
-      >
+  sx={{
+    display: "grid",
+    gridTemplateColumns: {
+      xs: "1fr",              // mobile ≤600px → 1 column
+      sm: "repeat(2, 1fr)",   // ≥600px → 2 columns
+      md: "repeat(2, 1fr)",   // ≥900px still 2 columns
+      lg: "repeat(3, 1fr)",   // ≥1300px → 3 columns
+    },
+    gap: "1.5em",
+    marginTop: "20px",
+    width: "95%",
+    marginX: "auto",
+  }}
+>
         {arr.map((e, index) => (
-          <Box key={index} sx={{ width: {lg:' 21vw', xs: '34.5vw'}, minWidth: {
-            lg: "21vw"}, height: "max-content" }}>
+          <Card
+            key={index}
+            elevation={0}
+            sx={{
+              display: "flex",
+              flexDirection: "column",
+              maxWidth: "100%",
+            }}
+          >
+            {/* Banner Card */}
             <Card
               elevation={0}
               sx={{
@@ -61,14 +76,9 @@ export default function Cards() {
                   sx={{
                     background: "rgba(0, 0, 0, 0.8)",
                     padding: "0.3em 1.2em",
-                    paddingBlock: "6px",
                     position: "absolute",
                     top: "10px",
                     fontSize: "92%",
-                    display: "flex",
-                    justifyContent: "center",
-                    alignItems: "center",
-                    gap: "4px",
                     borderRadius: "3em",
                   }}
                 >
@@ -83,7 +93,7 @@ export default function Cards() {
                     paddingBlock: "6px",
                     borderRadius: "0.3em",
                     position: "absolute",
-                    bottom: "50px",
+                    bottom: "10px",
                     fontSize: "92%",
                   }}
                 >
@@ -92,6 +102,7 @@ export default function Cards() {
               </CardContent>
             </Card>
 
+            {/* Info Card */}
             <Card elevation={0} sx={{ marginTop: "1em" }}>
               <Typography
                 variant="h5"
@@ -118,7 +129,7 @@ export default function Cards() {
                 <span>737+ Ratings</span>
               </Box>
             </Card>
-          </Box>
+          </Card>
         ))}
       </Box>
     </Box>

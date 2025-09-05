@@ -28,7 +28,7 @@ export default function Cards() {
   };
 
   return (
-    <Box sx={{ width: "94%", marginBottom: "4em" }}>
+    <Box sx={{ width: {xs: "100%", sm:"94%"}, marginBottom: "4em", marginLeft: "1em" }}>
       <Stack direction="row" justifyContent="space-between">
         <Typography variant="h4" sx={{ fontSize: "175%", fontWeight: 600 }}>
           Spend Less, Order More!🤩
@@ -76,7 +76,7 @@ export default function Cards() {
           marginTop: "20px",
           display: "flex",
           justifyContent: "space-between",
-          gap: "2em",
+          gap: "4em",
           overflowX: "auto",
           scrollBehavior: "smooth",
           '&::-webkit-scrollbar': { display: 'none' },

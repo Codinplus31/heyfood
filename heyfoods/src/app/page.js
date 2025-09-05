@@ -299,7 +299,7 @@ const bannerRef = useRef(null);
           sx={{
             
             height: '100%',
-            minWidth: '29vw',
+            minWidth: {lg: '29.5vw', xs: '80%'},
             borderRadius: '0.6em',
                 aspectRatio: 2.435 / 1
           }}
