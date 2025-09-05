@@ -21,7 +21,8 @@ import { MyContext } from './page.js';
 export default function StoreFilter() {
   const { data } = useContext(MyContext);
   const [groupedByGenre, setgroup] = useState(null)
-  const [sort, setsort] = useState(false)
+  const [sort, setsort] = useState(false);
+  const [sortdata, setsortdata] = useState(null)
   const [sortKey, setSortKey] = useState("Most Popular");
 
   useEffect(()=> {
@@ -96,7 +97,7 @@ console.log(groupedByGenre);
         <Cards data={e} key={i}/>
       )))
       }
-      <All data={data?.restaurants} isnull={data}/>
+      <All data={data?.restaurants} setsort={setsort} issort={sort} isnull={data}/>
       </Box>
 
 

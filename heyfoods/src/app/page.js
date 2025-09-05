@@ -22,6 +22,7 @@ export const MyContext = createContext(null);
 export default function Home() {
   
 const [data, setdata] = useState(null);
+const [sortdata, setsortdata] = useState(null)
 const [mainsort, setmsort] = useState(false);
 const bannerRef = useRef(null);
   const isMobile = useMediaQuery('(max-width:600px)');
@@ -56,15 +57,17 @@ useEffect(() => {
   }, []);
 function filterVendorsByTag(data, tagName) {
   if(data !== null){
-    return data.restaurants?.filter(vendor => vendor.tag.includes(tagName));
-
+    let sorted = data.restaurants?.filter(vendor => vendor.tag.includes(tagName));
+    setsortdata(sorted);
+    return sorted;
   }
 }
 
 // Usage:
+/*
 const chickenVendors = filterVendorsByTag(data, "Chicken");
 const nativeVendors = filterVendorsByTag(data, "Native corner");
-
+*/
  
   const scrollLeft = () => {
     if (bannerRef.current) {
@@ -126,7 +129,7 @@ const nativeVendors = filterVendorsByTag(data, "Native corner");
               <span className="jss354 jss378">Grocery</span>
             </Button>
       </Box>
-      <Box id="root_restaurantTags" sx={{ p: 2, paddingLeft: "5em", width: '95%', overflowX: "scroll", '&::-webkit-scrollbar': {
+      <Box id="root_restaurantTags" sx={{ p: 2, mb: mainsort === true ? "4em" : "0px", paddingLeft: "5em", width: '95%', overflowX: "scroll", '&::-webkit-scrollbar': {
             display: 'none', // Hide scrollbar for Chrome/Safari
           }, }}>
       <Stack
@@ -141,7 +144,12 @@ const nativeVendors = filterVendorsByTag(data, "Native corner");
             key={i}
             variant="text"
             color="inherit"
-            onClick={()=> setmsort(true)}
+            onClick={()=> {
+              
+              setmsort(true)
+              filterVendorsByTag(data, tag.name)
+            
+            }}
             sx={{
               display: "flex",
               flexDirection: "column",
@@ -190,7 +198,7 @@ const nativeVendors = filterVendorsByTag(data, "Native corner");
       sx={{
         width: '100vw',
         height: {xs: "max-content", sm:'162px'},
-        display: 'flex',
+        display: mainsort === false ? 'flex' : 'none',
         alignItems: 'center',
         position: 'relative',
         overflow: 'hidden',
@@ -199,7 +207,7 @@ const nativeVendors = filterVendorsByTag(data, "Native corner");
       {isMobile ? (
         // Mobile View: Swiper with dots
         
-    <Box sx={{display: "flex", flexDirection: "column", width: "100%", height: "max-content"}}>
+    <Box sx={{display: mainsort == true ? "none" : "flex", flexDirection: "column", width: "100%",  height: "max-content"}}>
       <div ref={sliderRef} className="keen-slider" style={{ height: '156px' }}>
         {data !== null && data?.banners.map((e, i) => (
           <div className="keen-slider__slide" key={i}>
@@ -363,7 +371,7 @@ const nativeVendors = filterVendorsByTag(data, "Native corner");
       )}
     </Box>
       {mainsort ?
-      <Allsort />: 
+      <Allsort data={sortdata} setsort={setmsort} isnull={data} issort={mainsort}/>: 
 
        <Main /> 
       
