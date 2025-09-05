@@ -122,15 +122,15 @@ export default function Cards({data}) {
             // width: {lg:' 26.5vw', xs: '34.5vw'}, minWidth: {xs: "48%",  
             // lg: "26.5vw"},
             flex: "0 0 auto", // prevent shrinking
-    flexBasis: { xs: '21.5vw', lg: "34.5vw" },
-    mr: { xs: "1em", lg: "0.3em" },
+              flexBasis: { xs: '21.5vw', lg: "34.5vw" },
+              mr: { xs: "1em", lg: "0.3em" },
              height: "max-content",
               // mr: { xs: "1em", lg: "2em" }, 
               }}>
             <Card
               elevation={0}
               sx={{
-                backgroundImage: "url('./banners/Frame 1572.png')",
+                backgroundImage: `url('${e.img}')`,
                 backgroundSize: "100% 100%",
                 backgroundPosition: "center",
                 aspectRatio: 2.66667 / 1,

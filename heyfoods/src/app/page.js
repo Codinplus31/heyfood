@@ -16,11 +16,13 @@ import Main from './main';
 import "./index.css";
 import { useKeenSlider } from 'keen-slider/react';
 import 'keen-slider/keen-slider.min.css';
+import Allsort from "./all.js"
 import  {useState, useEffect,  useRef, createContext,} from "react";
 export const MyContext = createContext(null);
 export default function Home() {
   
 const [data, setdata] = useState(null);
+const [mainsort, setmsort] = useState(false);
 const bannerRef = useRef(null);
   const isMobile = useMediaQuery('(max-width:600px)');
 const [currentSlide, setCurrentSlide] = useState(0);
@@ -32,7 +34,7 @@ const [currentSlide, setCurrentSlide] = useState(0);
       setCurrentSlide(s.track.details.rel);
     },
   });
-
+let dummy = [0,0,0,0,0,0,0]
 useEffect(() => {
     const fetchData = async () => {
       try {
@@ -54,7 +56,7 @@ useEffect(() => {
   }, []);
 function filterVendorsByTag(data, tagName) {
   if(data !== null){
-    return vendors.filter(vendor => vendor.tag.includes(tagName));
+    return data.restaurants?.filter(vendor => vendor.tag.includes(tagName));
 
   }
 }
@@ -85,9 +87,9 @@ const nativeVendors = filterVendorsByTag(data, "Native corner");
 
   return (
        <MyContext.Provider value={{ data, setdata }}>
-      <main style={{width: "100%",  display: "flex", alignItems: "center",  flexDirection: "column"}}>
+      <main style={{width: {xs:"100%", sm: "95%"},  display: "flex", alignItems: "center",  flexDirection: "column"}}>
       <Header/>
-      <div style={{width: {xs: "100%", sm:"95%"}, display: {xs:"flex", sm:"block"}, justifyContent:"center", alignItems: "center", padding: "1.6em 0em", borderBottom: "2px solid rgba(150, 150, 150, 0.1)", }}>
+      <Box sx={{width: "100%", display: {xs:"flex", sm:"block"}, justifyContent:{xs:"center", sm: "flex-start"}, alignItems: "center", padding: "1.6em 2em", borderBottom: "2px solid rgba(150, 150, 150, 0.1)", }}>
             <Button
               variant="contained"
               disableElevation
@@ -123,7 +125,7 @@ const nativeVendors = filterVendorsByTag(data, "Native corner");
             >
               <span className="jss354 jss378">Grocery</span>
             </Button>
-      </div>
+      </Box>
       <Box id="root_restaurantTags" sx={{ p: 2, paddingLeft: "5em", width: '95%', overflowX: "scroll", '&::-webkit-scrollbar': {
             display: 'none', // Hide scrollbar for Chrome/Safari
           }, }}>
@@ -134,11 +136,12 @@ const nativeVendors = filterVendorsByTag(data, "Native corner");
         id="restaurantTags"
         
       >
-        {data !== null &&  data?.tags.map((tag) => (
+        {data !== null &&  data?.tags.map((tag,i) => (
           <Button
-            key={tag.label}
+            key={i}
             variant="text"
             color="inherit"
+            onClick={()=> setmsort(true)}
             sx={{
               display: "flex",
               flexDirection: "column",
@@ -158,6 +161,29 @@ const nativeVendors = filterVendorsByTag(data, "Native corner");
             <Typography variant="body2">{tag.name}</Typography>
           </Button>
         ))}
+        {data == null &&  [...dummy, ...dummy, ...dummy,...dummy].map((tag,i) => (
+          <Button
+            key={i}
+            variant="text"
+            color="inherit"
+            sx={{
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+              textTransform: "none",
+              minWidth: 80,
+              color: "black",
+              background: "#E6E6E6"
+            }}
+            
+          >
+             <div
+            
+              style={{ width: 40, height: 40, marginBottom: 4 }}
+            />
+            <Typography variant="body2"></Typography>
+          </Button>
+        ))}
       </Stack>
     </Box>
     <Box
@@ -172,36 +198,7 @@ const nativeVendors = filterVendorsByTag(data, "Native corner");
     >
       {isMobile ? (
         // Mobile View: Swiper with dots
-        // <Swiper
-        //   modules={[Pagination]}
-        //   pagination={{ clickable: true }}
-        //   spaceBetween={20}
-        //   slidesPerView={1}
-        //   style={{ width: '100%', height: '152px', display:"flex"}}
-        // >
-        //   {ban.map((e,i)=>(
-        //     <SwiperSlide  style={{display: "flex", justifyContent: "center", alignItems: "center"}}>
-              
-        //       <Card
-        //         sx={{
-        //           height: '100%',
-        //           width: '100%',
-        //           borderRadius: '0.6em',
-        //           aspectRatio: 2.435 / 1,
-        //         }}
-        //         key={i}
-        //       >
-        //         <img
-        //           src={e}
-        //           alt={`banner-${i}`}
-        //           style={{ width: '100%', height: '100%', borderRadius: '0.6em' }}
-        //         />
-        //       </Card>
-              
-             
-        //     </SwiperSlide>
-        //   ))}
-        // </Swiper>
+        
     <Box sx={{display: "flex", flexDirection: "column", width: "100%", height: "max-content"}}>
       <div ref={sliderRef} className="keen-slider" style={{ height: '156px' }}>
         {data !== null && data?.banners.map((e, i) => (
@@ -223,10 +220,46 @@ const nativeVendors = filterVendorsByTag(data, "Native corner");
             </Card>
           </div>
         ))}
+        {data == null && dummy.map((e, i) => (
+          <div className="keen-slider__slide" key={i}>
+            <Card
+              sx={{
+                height: '156px',
+                width: '90%',
+                mx: 'auto',
+                background: "#E6E6E6",
+                borderRadius: '0.6em',
+                aspectRatio: 2.435 / 1,
+              }}
+            >
+              {/* <img
+                src={e}
+                alt={`banner-${i}`}
+                style={{ width: '100%', height: '100%', objectFit: 'cover', borderRadius: '0.6em' }}
+              /> */}
+            </Card>
+          </div>
+        ))}
       </div>
 
       <Box sx={{ display: 'flex', justifyContent: 'center', mt: 1 }}>
         {data !== null &&  data?.banners.map((_, idx) => (
+          <Box
+            key={idx}
+            onClick={() => slider.moveToIdx(idx)}
+            sx={{
+              width: "1em",
+              // height: 10,
+              padding: "0.17em",
+              margin: "0em 0.3em",
+              borderRadius: '2em',
+              backgroundColor: currentSlide === idx ? 'black' : '#E6E6E6',
+              mx: 0.5,
+              cursor: 'pointer',
+            }}
+          />
+        ))}
+        {data == null &&  [0].map((_, idx) => (
           <Box
             key={idx}
             onClick={() => slider.moveToIdx(idx)}
@@ -294,6 +327,25 @@ const nativeVendors = filterVendorsByTag(data, "Native corner");
                 />
               </Card>
             ))}
+            {data === null && dummy.map((e, i) => (
+              <Card
+                key={i}
+                sx={{
+                  height: '100%',
+                  minWidth: { sm: '48vw', xs: '80%', md:"34vw" },
+                  borderRadius: '0.6em',
+                  aspectRatio: 2.435 / 1,
+                  background: "gray"
+
+                }}
+              >
+                {/* <img
+                  src={e}
+                  alt={`banner-${i}`}
+                  style={{ width: '100%', height: '100%', borderRadius: '0.6em' }}
+                /> */}
+              </Card>
+            ))}
           </Stack>
 
           <IconButton
@@ -310,8 +362,12 @@ const nativeVendors = filterVendorsByTag(data, "Native corner");
         </>
       )}
     </Box>
+      {mainsort ?
+      <Allsort />: 
 
-      <Main />
+       <Main /> 
+      
+    }
      </main>
        </MyContext.Provider>
     
