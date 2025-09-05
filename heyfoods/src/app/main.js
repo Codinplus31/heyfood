@@ -41,6 +41,42 @@ export default function StoreFilter() {
     }
   }, [data])
 
+
+  
+
+  useEffect(() => {
+    let sorted = [...vendors]; // Always start with a copy
+
+      if (sortKey === "Most Rated") {
+          // Sort by stars (desc)
+              sorted = sorted.sort((a, b) => Number(b.stars) - Number(a.stars));
+                }
+                  else if (sortKey === "Highest rated") {
+                      // Sort by rating (desc)
+                          sorted = sorted.sort((a, b) => Number(b.rating) - Number(a.rating));
+                            }
+                              else if (sortKey === "Newest") {
+                                  // Sort by created_at (newest first) — DESC by date
+                                      sorted = sorted.sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
+                                        }
+                                          else if (sortKey === "Most Popular") {
+                                              // Sort by stars DESC, then rating DESC as tiebreaker
+                                                  sorted = sorted.sort((a, b) => {
+                                                        const starDiff = Number(b.stars) - Number(a.stars);
+                                                              if (starDiff !== 0) return starDiff;
+                                                                    return Number(b.rating) - Number(a.rating);
+                                                                        });
+                                                                          }
+                                                                            else if (sortKey === "Nearest") {
+                                                                                // 📍 Placeholder — implement geolocation sort later
+                                                                                    // For now, leave unsorted or sort by name or ID
+                                                                                        console.log("Nearest sorting not implemented yet");
+                                                                                          }
+
+                                                                                            setsortdata(sorted);
+                                                                                            }, [sortKey, vendors]);
+                                                                                
+
 console.log(groupedByGenre);
 
   return (
