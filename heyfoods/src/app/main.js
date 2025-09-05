@@ -45,7 +45,8 @@ export default function StoreFilter() {
   
 
   useEffect(() => {
-    let sorted = [...vendors]; // Always start with a copy
+    if(data !== null){
+    let sorted = [...data?.restaurants]; // Always start with a copy
 
       if (sortKey === "Most Rated") {
           // Sort by stars (desc)
@@ -74,10 +75,12 @@ export default function StoreFilter() {
                                                                                           }
 
                                                                                             setsortdata(sorted);
-                                                                                            }, [sortKey, vendors]);
-                                                                                
 
-console.log(groupedByGenre);
+                                                                                        }
+                                                                                            }, [sortKey, data]);
+                                                                                
+/*
+console.log(groupedByGenre);*/
 
   return (
     <div style={{width: "100%", height: "max-content", marginTop: "5em", marginBottom: "4em"}}>
@@ -113,7 +116,7 @@ console.log(groupedByGenre);
             control={<Radio sx={{background: "#efefef"}}/>}
             label="Most Popular"
           />
-          <FormControlLabel value="Nearest" control={<Radio />} label="Nearest" />
+          
           <FormControlLabel
             value="Highest rated"
             control={<Radio sx={{background: "#efefef"}}/>}
@@ -130,7 +133,7 @@ console.log(groupedByGenre);
     </Box> 
     <Box sx={{width: {xs: "100%", sm:"80%"}}}>
       {sort ? 
-      <All data={data?.restaurants} setsort={setsort} issort={sort} isnull={data}/>: 
+      <All data={sortdata} setsort={setsort} issort={sort} isnull={data}/>: 
     groupedByGenre !== null && groupedByGenre?.map(((e,i)=> (
         
         <Cards data={e} key={i}/>
