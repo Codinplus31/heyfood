@@ -70,7 +70,7 @@ export default function Header() {
   const [searchValue, setSearchValue] = useState('');
 const [drawerOpen, setDrawerOpen] = useState(false); // <-- Drawer state
   const [sortKey, setSortKey] = useState("Most Popular");
-
+ const [sortclick, setsortclick] = useState(false)
   const toggleDrawer = (open) => (event) => {
     if (event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
       return;
@@ -172,7 +172,7 @@ Heyfood mobile app</span>
   );
 
   return (
-    <div id="theAppBarId" style={{width: "100%", borderBottom: "2px solid rgba(150, 150, 150, 0.1)"}}>
+    <div id="theAppBarId" style={{width: "100vw", borderBottom: "2px solid rgba(150, 150, 150, 0.1)"}}>
       <Toolbar className="jss279" sx={{ justifyContent: 'space-between' }}>
         <div style={{ display: 'flex', alignItems: 'center',  }} className="jss283">
           {/* Menu Icon */}
@@ -293,7 +293,13 @@ Heyfood mobile app</span>
 />
         </Box>
 
-        <IconButton>
+        <IconButton onClick={()=> {
+          if(sortclick === true){
+            setsortclick(false);
+          } else {
+            setsortclick(true)
+          }
+        }}>
           <img src="/updown.svg" />
         </IconButton>
       </Toolbar>
@@ -303,12 +309,12 @@ Heyfood mobile app</span>
         {drawerContent}
       </Drawer>
 
-      <Box sx={{ p: 2, width: "90%", border: "1px solid red",  display: {
-      xs: "block",
+      <Box sx={{ p: 2, width: "100%", height: sortclick == true ? "max-content" : "0px", display: {
+      xs: sortclick == true ? "block" : "none",
       sm:"none"
-    }, position: "absolute", top:"25%", left: "0px", overflow: "hidden", background: "white" }}>
+    }, overflowY: "hidden", position: "absolute", top:"18%", zIndex: 999, left: "0px", overflow: "hidden", background: "white" }}>
 
-      <Box  sx={{width: "100%", display: "flex", justifyContent: "center", alignItems: "center", marginTop: "2px"}} >
+      <Box  sx={{width: "100%", display: "flex", justifyContent: "center", alignItems: "center", background: "white", marginTop: "2px"}} >
       <Box sx={{width: "100%",  display: "flex", justifyContent: "space-between", alignItems: "center"}} >
         <Box >
         <img src="/icons/new/sort-desc.svg" alt="sort" />

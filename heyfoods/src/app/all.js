@@ -4,28 +4,30 @@ import {
   Button,
   Stack,
   Card,
-  CardContent
+  CardContent,
+  Container 
 } from "@mui/material";
 
 export default function Cards({data, setsort, isnull, issort}) {
   let dumb = [0, 0, 0, 0, 0, 0];
 
   return (
-    <Box sx={{ width: "93%" }}>
+    <Container sx={{ width: {sm:"95%", xs:"100%"}, display: "flex", alignItems: "center", flexDirection: "column"}}>
       <Stack
         direction="row"
+        alignItems="center"
         justifyContent="space-between"
         sx={{ width: "100%", margin: "0 auto" }}
       >
          <Box sx={{display: "flex", gap: "2em"}}>
-        <Typography variant="h4" sx={{ fontSize: "175%", fontWeight: 600 }}>
+        <Typography variant="h4" sx={{ fontSize: {xs: "120%", sm:"175%"}, fontWeight: 600 }}>
           {issort ===true && isnull !== null ? data.length + " Store near you":"All Restaurants"}
         </Typography>
           {issort === true ? <Button onClick={()=> setsort(false)} variant="text" color="error">Reset</Button>: ""}
         </Box>
-        <Button variant="text" sx={{ color: "black", textTransform: "none" }}>
+        {isnull !== null && issort === false && <Button variant="text" sx={{ color: "black", textTransform: "none" }}>
           See all
-        </Button>
+        </Button>}
       </Stack>
 
       {/* ✅ Responsive Grid Layout */}
@@ -42,9 +44,11 @@ export default function Cards({data, setsort, isnull, issort}) {
             marginTop: "20px",
             flex: "0 0 auto", // prevent shrinking
             flexBasis: { xs: "48%", lg: "26.5vw" },
-            mr: { xs: "1em", lg: "2em" },
-            // width: "95%",
-            marginX: "auto",
+            //mr: { xs: "1em", lg: "2em" },
+           //  width: {sm:"95%"}
+           
+            
+            
           }}>
         {isnull !== null && data.map((e, index) => (
           <Card
@@ -228,6 +232,6 @@ export default function Cards({data, setsort, isnull, issort}) {
           </Card>
         ))}
       </Box>
-    </Box>
+    </Container>
   );
 }

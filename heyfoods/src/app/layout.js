@@ -2,6 +2,7 @@
 
 import { Geist, Geist_Mono } from "next/font/google";
 import "./index.css";
+
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -33,7 +34,7 @@ export default function RootLayout({ children }) {
           rel="stylesheet"
         />
       </head>
-      <body className={`${geistSans.variable} ${geistMono.variable}`}>
+      <body>
        <ThemeProvider theme={theme}>
           {children}
         </ThemeProvider>

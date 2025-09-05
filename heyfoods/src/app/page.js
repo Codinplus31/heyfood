@@ -39,7 +39,7 @@ let dummy = [0,0,0,0,0,0,0]
 useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch("https://heyfood-backend-me8h.onrender.com/data");
+        const response = await fetch("https://heyfood-backend.vercel.app/data");
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`);
         }
@@ -90,9 +90,9 @@ const nativeVendors = filterVendorsByTag(data, "Native corner");
 
   return (
        <MyContext.Provider value={{ data, setdata }}>
-      <main style={{width: {xs:"100%", sm: "95%"},  display: "flex", alignItems: "center",  flexDirection: "column"}}>
+      <Box sx={{width: {xs:"100vw", sm: "100vw"}, border:"1px solid red", overflowX:"hidden", display: "flex", alignItems: "center",  flexDirection: "column"}}>
       <Header/>
-      <Box sx={{width: "100%", display: {xs:"flex", sm:"block"}, justifyContent:{xs:"center", sm: "flex-start"}, alignItems: "center", padding: "1.6em 2em", borderBottom: "2px solid rgba(150, 150, 150, 0.1)", }}>
+      <Container sx={{width: "100%", display: {xs:"flex", sm:"block"}, justifyContent:{xs:"center", sm: "flex-start"}, alignItems: "center", padding: "2em 2em", borderBottom: "2px solid rgba(150, 150, 150, 0.1)", }}>
             <Button
               variant="contained"
               disableElevation
@@ -104,6 +104,7 @@ const nativeVendors = filterVendorsByTag(data, "Native corner");
                   padding: "1.4em 2.7em",
                   marginRight: "12px",
               borderRadius: '5em',
+              minWidth:{xs: "50%", sm: "64px"},
               '&:hover': {
                 bgcolor: 'gray', // Uses green from theme
               }
@@ -122,23 +123,23 @@ const nativeVendors = filterVendorsByTag(data, "Native corner");
               color: 'black',
                   padding: "1.4em 2.7em",
               borderRadius: '5em',
-              minWidth: "64px"
+              minWidth: {xs: "50%", sm:"64px"}
               
             }}
             >
               <span className="jss354 jss378">Grocery</span>
             </Button>
-      </Box>
-      <Box id="root_restaurantTags" sx={{ p: 2, mb: mainsort === true ? "4em" : "0px", paddingLeft: "5em", width: '95%', overflowX: "scroll", '&::-webkit-scrollbar': {
+      </Container>
+      <Box id="root_restaurantTags" sx={{ py: "2em", borderBottom: "1px solid rgba(150, 150, 150, 0.1)", mb: mainsort === true ? "4em" : "0px", display:"flex", gap: 2, justifyContent: "flex-start", paddingLeft: "5em", width: '100vw', overflowX: "scroll", '&::-webkit-scrollbar': {
             display: 'none', // Hide scrollbar for Chrome/Safari
           }, }}>
-      <Stack
+      {/*<Stack
         direction="row"
         justifyContent={"flex-start"}
         gap={2}
         id="restaurantTags"
         
-      >
+      > */}
         {data !== null &&  data?.tags.map((tag,i) => (
           <Button
             key={i}
@@ -192,7 +193,7 @@ const nativeVendors = filterVendorsByTag(data, "Native corner");
             <Typography variant="body2"></Typography>
           </Button>
         ))}
-      </Stack>
+      {/*</Stack>*/}
     </Box>
     <Box
       sx={{
@@ -343,7 +344,7 @@ const nativeVendors = filterVendorsByTag(data, "Native corner");
                   minWidth: { sm: '48vw', xs: '80%', md:"34vw" },
                   borderRadius: '0.6em',
                   aspectRatio: 2.435 / 1,
-                  background: "gray"
+                  background: "#E6E6E6"
 
                 }}
               >
@@ -376,7 +377,7 @@ const nativeVendors = filterVendorsByTag(data, "Native corner");
        <Main /> 
       
     }
-     </main>
+     </Box>
        </MyContext.Provider>
     
   );

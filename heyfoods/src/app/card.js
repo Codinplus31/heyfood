@@ -6,7 +6,8 @@ import {
   IconButton,
   Stack,
   Card,
-  CardContent
+  CardContent,
+  Container
 } from "@mui/material";
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
@@ -96,10 +97,10 @@ function getRestaurantStatus(open_time, close_time) {
   };
 
   return (
-    <Box sx={{ width: {xs: "100%", sm:"94%"}, marginBottom: "4em", marginLeft: "1em" }}>
+    <Container sx={{ width: {xs: "100%", sm:"94%"}, marginBottom: "4em" }}>
       <Stack direction="row" justifyContent="space-between">
         <Box >
-        <Typography variant="h4" sx={{ fontSize: "175%", fontWeight: 600 }}>
+        <Typography variant="h4" sx={{ fontSize: {xs: "120%", sm:"175%"}, fontWeight: 600 }}>
           {data.genre}
         </Typography>
           <Typography
@@ -125,7 +126,7 @@ function getRestaurantStatus(open_time, close_time) {
           >
             See all
           </Button>
-          <Box sx={{ display: "flex", gap: "15px" }}>
+          <Box sx={{ display: {xs:"none", sm:"flex"}, gap: "15px" }}>
             <IconButton
               onClick={() => handleScroll("left")}
               sx={{ background: "#EEEEEE" }}
@@ -273,6 +274,6 @@ function getRestaurantStatus(open_time, close_time) {
           </Box>
         ))}
       </Box>
-    </Box>
+    </Container>
   );
 }  
