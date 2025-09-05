@@ -67,7 +67,10 @@ console.log(groupedByGenre);
         <RadioGroup
           name="sortKey"
           value={sortKey}
-          onChange={(e) => setSortKey(e.target.value)}
+          onChange={(e) => {
+            setSortKey(e.target.value)
+            setsort(true)
+          }}
         >
           <FormControlLabel
             value="Most Popular"
@@ -91,13 +94,14 @@ console.log(groupedByGenre);
     </Box> 
     <Box sx={{width: {xs: "100%", sm:"80%"}}}>
       {sort ? 
-      <All />: 
+      <All data={data?.restaurants} setsort={setsort} issort={sort} isnull={data}/>: 
     groupedByGenre !== null && groupedByGenre?.map(((e,i)=> (
         
         <Cards data={e} key={i}/>
       )))
       }
-      <All data={data?.restaurants} setsort={setsort} issort={sort} isnull={data}/>
+
+      {sort === false && <All data={data?.restaurants} setsort={setsort} issort={sort} isnull={data}/>}
       </Box>
 
 
