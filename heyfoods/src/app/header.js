@@ -251,36 +251,35 @@ const SearchContent = ()=> (
 function filterVendorsBySearch(vendors, query) {
     if (!query.trim()) return vendors.map(v => ({ ...v, matchedVia: 'all' }));
 
-      const lowerQuery = query.toLowerCase().trim();
-        const results = [];
+    const lowerQuery = query.toLowerCase().trim();
+    const results = [];
 
-          vendors.forEach(vendor => {
-              const nameMatch = vendor.name.toLowerCase().includes(lowerQuery);
-                  const tagMatches = vendor.tag.filter(tag => 
-                        tag.toLowerCase().includes(lowerQuery)
-                            );
+     vendors.forEach(vendor => {
+            
+    const nameMatch = vendor.name.toLowerCase().includes(lowerQuery);
+    const tagMatches = vendor.tag.filter(tag => 
+    tag.toLowerCase().includes(lowerQuery));
 
-                                if (nameMatch) {
-                                      results.push({
-                                              ...vendor,
-                                                      matchedVia: 'name',
-                                                              matchedValue: vendor.name
-                                                                    });
-                                                                        }
+    if (nameMatch) {
+      results.push({
+        ...vendor,
+        matchedVia: 'name',
+        matchedValue: vendor.name
+      });
+    }
 
-                                                                            if (tagMatches.length > 0) {
-                                                                                  tagMatches.forEach(tag => {
-                                                                                          results.push({
-                                                                                                    ...vendor,
-                                                                                                              matchedVia: 'tag',
-                                                                                                                        matchedValue: tag
-                                                                                                                                });
-                                                                                                                                      });
-                                                                                                                                          }
-                                                                                                                                            });
-
-                                                                                                                                              return results;
-                                                                                                                                              }
+  if (tagMatches.length > 0) {
+     tagMatches.forEach(tag => {
+    results.push({
+    ...vendor,
+    matchedVia: 'tag',
+   matchedValue: tag
+   })
+  });
+  }
+  });
+    return results;
+}
 
 
 
@@ -289,14 +288,19 @@ function filterVendorsBySearch(vendors, query) {
     // Filtered vendors (result of search)
     const [filteredVendors, setFilteredVendors] = useState([]);                                                                                                                        
 
-useEffect(() => {
+/*useEffect(() => {
   if(data !== null){
     const results = filterVendorsBySearch(data?.restaurants, searchQuery);
       setFilteredVendors(results);
 }
-      }, [searchQuery, data]);
+      }, [searchQuery, data]);*/
 
-
+const handleSearchSubmit = () => {
+  if(data !== null){
+    const results = filterVendorsBySearch(data?.restaurants, searchQuery);
+      setFilteredVendors(results);
+}
+};
 
   return (
     <div id="theAppBarId" style={{width: "100vw", borderBottom: "2px solid rgba(150, 150, 150, 0.1)"}}>
@@ -331,31 +335,49 @@ useEffect(() => {
         </div>
 
         {/* Search Bar */}
-        <Box onClick={()=> setsearchenter(true)}className="jss285" sx={{borderRadius: "12rem", overflow:"hidden", width: searchenter === true ? "60%" : "15%", display: {xs: "none", sm: "block"} }}>
-          <InputBase
-  id="nonMobileSearchId"
-  placeholder="Search restaurants or food"
-
-  type="search"
-  fullWidth
-  startAdornment={
-    <InputAdornment position="end" sx={{ ml: 1 }}>
-      <img src="/tiny-search.svg" alt="search" />
-    </InputAdornment>
-  }
-  sx={{
-    '& .MuiInputBase-input': {
-      padding: '0.5em 1.2em',
-
-    fontSize: '103%',
-    borderRadius: '3em',
-    letterSpacing: '-0.5px',
-    backgroundColor: '#F0F0F0',
-    },
-    backgroundColor: '#F0F0F0'
+        <Box
+  component="form"
+  onSubmit={(e) => {
+    e.preventDefault(); // Prevent page reload
+    handleSearchSubmit(); // Trigger search
   }}
-/>
-        </Box>
+  onClick={() => setsearchenter(true)}
+  className="jss285"
+  sx={{ borderRadius: "12rem", overflow: "hidden", width: "100%" }}
+>
+  <InputBase
+    id="nonMobileSearchId"
+    placeholder="Search restaurants or food"
+    type="search"
+    onClick={() => setsearchenter(true)}
+    fullWidth
+    value={searchQuery}
+    onChange={(e) => setSearchQuery(e.target.value)} // Still update state as they type
+    onKeyDown={(e) => {
+      if (e.key === 'Enter') {
+        e.preventDefault();
+        handleSearchSubmit();
+      }
+    }}
+    startAdornment={
+      <InputAdornment position="start" sx={{ ml: 1 }}>
+        <img src="/tiny-search.svg" alt="search" />
+      </InputAdornment>
+    }
+    
+    sx={{
+      '& .MuiInputBase-input': {
+        padding: '0.5em 1.2em',
+        fontSize: '103%',
+        borderRadius: '3em',
+        letterSpacing: '-0.5px',
+        backgroundColor: '#F0F0F0',
+      },
+      backgroundColor: '#F0F0F0'
+    }}
+  />
+</Box>
+
         
         
   <Box onClick={()=> setsearchenter(false)} sx={{display: {xs:"none", sm:searchenter == true ? "block": "none"},width: "60px"}}>
@@ -409,31 +431,48 @@ useEffect(() => {
        <IconButton sx={{width:"10%"}} onClick={()=> setsearchenter(false)}>
         <CloseIcon />
        </IconButton>:""}
-        <Box onClick={()=> setsearchenter(true)} className="jss285" sx={{borderRadius: "12rem", overflow:"hidden", width: "100%" }}>
-          <InputBase
-  id="nonMobileSearchId"
-  placeholder="Search restaurants or food"
-  type="search"
-  onClick={()=> setsearchenter(true)}
-  fullWidth
-  startAdornment={
-    <InputAdornment position="end" sx={{ ml: 1 }}>
-      <img src="/tiny-search.svg" alt="search" />
-    </InputAdornment>
-  }
-  sx={{
-    '& .MuiInputBase-input': {
-      padding: '0.5em 1.2em',
-
-    fontSize: '103%',
-    borderRadius: '3em',
-    letterSpacing: '-0.5px',
-    backgroundColor: '#F0F0F0',
-    },
-    backgroundColor: '#F0F0F0'
+  <Box
+  component="form"
+  onSubmit={(e) => {
+    e.preventDefault(); // Prevent page reload
+    handleSearchSubmit(); // Trigger search
   }}
-/>
-        </Box>
+  onClick={() => setsearchenter(true)}
+  className="jss285"
+  sx={{ borderRadius: "12rem", overflow: "hidden", width: "100%" }}
+>
+  <InputBase
+    id="nonMobileSearchId"
+    placeholder="Search restaurants or food"
+    type="search"
+    onClick={() => setsearchenter(true)}
+    fullWidth
+    value={searchQuery}
+    onChange={(e) => setSearchQuery(e.target.value)} // Still update state as they type
+    onKeyDown={(e) => {
+      if (e.key === 'Enter') {
+        e.preventDefault();
+        handleSearchSubmit();
+      }
+    }}
+    startAdornment={
+      <InputAdornment position="start" sx={{ ml: 1 }}>
+        <img src="/tiny-search.svg" alt="search" />
+      </InputAdornment>
+    }
+    
+    sx={{
+      '& .MuiInputBase-input': {
+        padding: '0.5em 1.2em',
+        fontSize: '103%',
+        borderRadius: '3em',
+        letterSpacing: '-0.5px',
+        backgroundColor: '#F0F0F0',
+      },
+      backgroundColor: '#F0F0F0'
+    }}
+  />
+</Box>
 
         <IconButton onClick={()=> {
           if(sortclick === true){
