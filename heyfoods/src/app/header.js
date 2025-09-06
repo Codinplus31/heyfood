@@ -272,7 +272,7 @@ const SearchContent = ()=> (
 
             sx={{ display:{
               xs:"flex",
-              lg: searchenter === true ? "none" : "block"
+              sm: searchenter === true ? "none" : "flex"
 
             }, textTransform: 'none', color: 'black', marginLeft: "1rem" }}
           >
@@ -308,7 +308,7 @@ const SearchContent = ()=> (
         </Box>
         
         
-  <Box onClick={()=> setsearchenter(false)} sx={{display: {xs:"none", lg:searchenter == true ? "block": "none"},width: "60px"}}>
+  <Box onClick={()=> setsearchenter(false)} sx={{display: {xs:"none", sm:searchenter == true ? "block": "none"},width: "60px"}}>
  <CloseIcon />
    </Box>
         {/* Close Button (e.g., for mobile) */}
@@ -323,7 +323,7 @@ const SearchContent = ()=> (
         </IconButton> */}
 
         {/* Sign In & Cart */}
-        <div className="jss289 jss290" style={{ display: {xs:"flex",lg:searchenter == true ? "none": 'flex'}, alignItems: 'center', gap: 16 }}>
+        <Box className="jss289 jss290" sx={{display: {xs:"flex",sm:searchenter == true ? "none": 'flex'}, alignItems: 'center', gap: 4}}>
           <Button variant="text" color="inherit" sx={{color: 'black', fontWeight: 400,}}>
             <Typography variant="body2" className="jss378">
               Sign In
@@ -351,7 +351,7 @@ const SearchContent = ()=> (
               <Typography component={'span'} variant='body2' sx={{display: {xs: "none", sm: "block"}}}>Cart • 0</Typography>
             </Button>
           </Badge>
-        </div>
+        </Box>
       </Toolbar>
       <Toolbar sx={{justifyContent: "center", gap: "2em", display: {xs: "flex", sm: "none"}}} >
        
