@@ -224,8 +224,8 @@ const SearchContent = ()=> (
 
     const results = filterVendorsBySearch(data?.restaurants, e.name);
       setsearchenter(false)
-  alert(1);
-     // alert(JSON.stringify(results))
+  setSearchQuery(e.name)
+   //  alert(JSON.stringify(results))
     setFilteredVendors(results);
 
         
