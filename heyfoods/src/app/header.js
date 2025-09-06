@@ -219,80 +219,64 @@ const SearchContent = (
       </Typography>
       
         <List>
-        
-        <ListItem button>
-          <ListItemText primary="Add your restaurant" primaryTypographyProps={{
-      sx: {
-        fontSize: '80%', // smaller font size
-        fontWeight: 'bold',  // make it bold
-      }
-    }}/>
-        </ListItem>
-        <ListItem button>
-          <ListItemText primary="Become a delivery rider" primaryTypographyProps={{
-      sx: {
-        fontSize: '80%', // smaller font size
-        fontWeight: 'bold',  // make it bold
-      }
-    }} />
-        </ListItem>
-        <ListItem button>
-          <ListItemText primary="Go to Homepage" primaryTypographyProps={{
-      sx: {
-        fontSize: '80%', // smaller font size
-        fontWeight: 'bold',  // make it bold
-      }
-    }} />
-        </ListItem>
-      </List>
-      <Box>
-        <Box sx={{display: "flex", width: "90%"}}>
-          <img /> 
-          <span>Experience the
-Heyfood mobile app</span> 
-        </Box>
-        <Box sx={{display: "flex", width: "90%"}}>
-<Button
-              variant="contained"
-              disableElevation
-              startIcon={<ShoppingCartIcon sx={{display: {xs: "none", sm: "block"}}} color="white" fontSize="small" />}
-       
+      <ListItem button>
+        <ListItemIcon>
+          <img
+            src="/restaurant.png"
+            alt="restaurant"
+            style={{ width: 24, height: 24 }}
+          />
+        </ListItemIcon>
+        <ListItemText
+          primary="Add your restaurant"
+          primaryTypographyProps={{
+            sx: {
+              fontSize: "80%", // smaller font size
+              fontWeight: "bold", // make it bold
+            },
+          }}
+        />
+      </ListItem>
 
-                sx={{
-                bgcolor: 'common.black',
-                color: 'common.white',
-                padding: "8px 24px",
-                borderRadius: '5em',
-                '&:hover': {
-                  bgcolor: 'success.main', // Uses green from theme
-                }
-              }}
-            >
-              
-              <Typography component={'span'} variant='body2' sx={{display: {xs: "none", sm: "block"}}}>App store</Typography>
-            </Button>
-            <Button
-              variant="contained"
-              disableElevation
-              startIcon={<ShoppingCartIcon sx={{display: {xs: "none", sm: "block"}}} color="white" fontSize="small" />}
-       
+      <ListItem button>
+        <ListItemIcon>
+          <img
+            src="/rider.png"
+            alt="rider"
+            style={{ width: 24, height: 24 }}
+          />
+        </ListItemIcon>
+        <ListItemText
+          primary="Become a delivery rider"
+          primaryTypographyProps={{
+            sx: {
+              fontSize: "80%",
+              fontWeight: "bold",
+            },
+          }}
+        />
+      </ListItem>
 
-                sx={{
-                bgcolor: 'common.black',
-                color: 'common.white',
-                padding: "8px 24px",
-                borderRadius: '5em',
-                '&:hover': {
-                  bgcolor: 'success.main', // Uses green from theme
-                }
-              }}
-            >
-              
-              <Typography component={'span'} variant='body2' sx={{display: {xs: "none", sm: "block"}}}>Play Store</Typography>
-            </Button>
-
-        </Box>
-      </Box>
+      <ListItem button>
+        <ListItemIcon>
+          <img
+            src="/home.png"
+            alt="home"
+            style={{ width: 24, height: 24 }}
+          />
+        </ListItemIcon>
+        <ListItemText
+          primary="Go to Homepage"
+          primaryTypographyProps={{
+            sx: {
+              fontSize: "80%",
+              fontWeight: "bold",
+            },
+          }}
+        />
+      </ListItem>
+    </List>
+      
     </Box>
   );
         
