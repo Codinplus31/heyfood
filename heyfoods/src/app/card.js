@@ -1,3 +1,4 @@
+import Image from "next/image";
 import { useRef} from 'react';
 import {
   Box,
@@ -195,7 +196,7 @@ function getRestaurantStatus(open_time, close_time) {
             <Card
               elevation={0}
               sx={{
-                backgroundImage: `url('${e.img}')`,
+                backgroundImage: {`url('${e.img}')`},
                 backgroundSize: "100% 100%",
                 backgroundPosition: "center",
                 aspectRatio: 2.66667 / 1,
