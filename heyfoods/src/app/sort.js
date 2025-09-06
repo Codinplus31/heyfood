@@ -66,7 +66,7 @@ let data = filteredVendors;
       <Container sx={{paddingLeft:{xs:"0rem", sm: "3em"}}>
 
      
-<Typography variant="h5" sx={{fontWeight: 500, fontSize: {sm:"1.2em", xs: "0.9em"}, color:"black", }}>
+<Typography variant="h5" sx={{fontWeight: 500, fontSize: {sm:"1.2em", xs: "0.9em"}, color:"black" }}>
   Restaurants search results for {'"'+searchQuery+'"'}
 </Typography>
 </Container>
