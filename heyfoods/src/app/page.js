@@ -18,6 +18,7 @@ import { useKeenSlider } from 'keen-slider/react';
 import 'keen-slider/keen-slider.min.css';
 import Allsort from "./all.js"
 import  {useState, useEffect,  useRef, createContext,} from "react";
+import Searched from './sort.js';
 export const MyContext = createContext(null);
 export default function Home() {
   
