@@ -81,7 +81,7 @@ let data = filteredVendors;
           borderBottom: "1px solid #efefef",
           alignItems: "center",
           gap:"2em",
-          paddingLeft: {xs:"1em",sm:"3em"},
+          paddingLeft: {xs:"1em",sm:"2em"},
           "&:hover": {
             background: "#e6e6e6",
           },
