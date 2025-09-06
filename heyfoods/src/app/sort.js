@@ -22,7 +22,7 @@ import {
 export default function Sort({searchQuery, setSearchQuery, filteredVendors, setFilteredVendors}){
 let data = filteredVendors;
     return (
-   <Box sx={{width:"100%", px: "1em"}}> 
+   <Box sx={{width:"100%", px: {xs:"1em", sm:"0em"}, pl: {sm: "1em"}}> 
       <Box sx={{width: "100%", height: "max-content", display: {xs:"flex", sm:"flex"}, justifyContent:{xs:"center", sm: "flex-start"}, alignItems: "flex-end", paddingLeft: {xs:"0rem", sm: "3em"}}}>
             <Button
               variant="text"
