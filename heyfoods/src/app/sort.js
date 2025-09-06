@@ -16,7 +16,7 @@ import {
   ListItemIcon
 } from "@mui/material";
 
-export default function Sort(){
+export default function Sort({data}){
 
     return (
    <Container>   
