@@ -87,33 +87,32 @@ const [drawerOpen, setDrawerOpen] = useState(false); // <-- Drawer state
 
       if (sortKey === "Most Rated") {
           // Sort by stars (desc)
-              sorted = sorted.sort((a, b) => Number(b.stars) - Number(a.stars));
-                }
-                  else if (sortKey === "Highest rated") {
-                      // Sort by rating (desc)
-                          sorted = sorted.sort((a, b) => Number(b.rating) - Number(a.rating));
-                            }
-                              else if (sortKey === "Newest") {
-                                  // Sort by created_at (newest first) — DESC by date
-                                      sorted = sorted.sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
-                                        }
-                                          else if (sortKey === "Most Popular") {
+        sorted = sorted.sort((a, b) => Number(b.stars) - Number(a.stars));
+        }
+     else if (sortKey === "Highest rated") {
+         // Sort by rating (desc)
+        sorted = sorted.sort((a, b) => Number(b.rating) - Number(a.rating));
+        }
+     else if (sortKey === "Newest") {
+        // Sort by created_at (newest first) — DESC by date
+        sorted = sorted.sort((a, b) => new Date(b.created_at) - new Date(a.created_at))
+       }
+     else if (sortKey === "Most Popular") {
                                               // Sort by stars DESC, then rating DESC as tiebreaker
-                                                  sorted = sorted.sort((a, b) => {
-                                                        const starDiff = Number(b.stars) - Number(a.stars);
-                                                              if (starDiff !== 0) return starDiff;
-                                                                    return Number(b.rating) - Number(a.rating);
-                                                                        });
-                                                                          }
-                                                                            else if (sortKey === "Nearest") {
-                                                                                // 📍 Placeholder — implement geolocation sort later
-                                                                                    // For now, leave unsorted or sort by name or ID
-                                                                                        console.log("Nearest sorting not implemented yet");
-                                                                                          }
-
-                                                                                            setsortdata(sorted);
-                                                                                        }
-                                                                                            }, [sortKey, data]);
+        sorted = sorted.sort((a, b) => {
+        const starDiff = Number(b.stars) - Number(a.stars);
+        if (starDiff !== 0) return starDiff;
+        return Number(b.rating) - Number(a.rating);
+               });
+       }
+     else if (sortKey === "Nearest") {
+       // 📍 Placeholder — implement geolocation sort later
+      // For now, leave unsorted or sort by name or ID
+        console.log("Nearest sorting not implemented yet");
+      }
+      setsortdata(sorted);
+    }
+ }, [sortKey, data]);
 
 const drawerContent = (
     <Box
@@ -207,6 +206,97 @@ Heyfood mobile app</span>
       </Box>
     </Box>
   );
+
+const SearchContent = (
+    <Box
+      sx={{ width: "100%", position: "absolute", top:"18%", zIndex: 999, left: "0px"}}
+      role="presentation"
+      onClick={toggleDrawer(false)}
+      onKeyDown={toggleDrawer(false)}
+    >
+      <Typography variant="h2" >
+        Category
+      </Typography>
+      
+        <List>
+        
+        <ListItem button>
+          <ListItemText primary="Add your restaurant" primaryTypographyProps={{
+      sx: {
+        fontSize: '80%', // smaller font size
+        fontWeight: 'bold',  // make it bold
+      }
+    }}/>
+        </ListItem>
+        <ListItem button>
+          <ListItemText primary="Become a delivery rider" primaryTypographyProps={{
+      sx: {
+        fontSize: '80%', // smaller font size
+        fontWeight: 'bold',  // make it bold
+      }
+    }} />
+        </ListItem>
+        <ListItem button>
+          <ListItemText primary="Go to Homepage" primaryTypographyProps={{
+      sx: {
+        fontSize: '80%', // smaller font size
+        fontWeight: 'bold',  // make it bold
+      }
+    }} />
+        </ListItem>
+      </List>
+      <Box>
+        <Box sx={{display: "flex", width: "90%"}}>
+          <img /> 
+          <span>Experience the
+Heyfood mobile app</span> 
+        </Box>
+        <Box sx={{display: "flex", width: "90%"}}>
+<Button
+              variant="contained"
+              disableElevation
+              startIcon={<ShoppingCartIcon sx={{display: {xs: "none", sm: "block"}}} color="white" fontSize="small" />}
+       
+
+                sx={{
+                bgcolor: 'common.black',
+                color: 'common.white',
+                padding: "8px 24px",
+                borderRadius: '5em',
+                '&:hover': {
+                  bgcolor: 'success.main', // Uses green from theme
+                }
+              }}
+            >
+              
+              <Typography component={'span'} variant='body2' sx={{display: {xs: "none", sm: "block"}}}>App store</Typography>
+            </Button>
+            <Button
+              variant="contained"
+              disableElevation
+              startIcon={<ShoppingCartIcon sx={{display: {xs: "none", sm: "block"}}} color="white" fontSize="small" />}
+       
+
+                sx={{
+                bgcolor: 'common.black',
+                color: 'common.white',
+                padding: "8px 24px",
+                borderRadius: '5em',
+                '&:hover': {
+                  bgcolor: 'success.main', // Uses green from theme
+                }
+              }}
+            >
+              
+              <Typography component={'span'} variant='body2' sx={{display: {xs: "none", sm: "block"}}}>Play Store</Typography>
+            </Button>
+
+        </Box>
+      </Box>
+    </Box>
+  );
+        
+
 
   return (
     <div id="theAppBarId" style={{width: "100vw", borderBottom: "2px solid rgba(150, 150, 150, 0.1)"}}>
@@ -391,6 +481,8 @@ Heyfood mobile app</span>
         </RadioGroup>
       </FormControl>
     </Container >
+
+     <SearchContent />
     </div>
   );
 }
