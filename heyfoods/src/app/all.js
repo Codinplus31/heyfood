@@ -61,7 +61,7 @@ export default function Cards({data, setsort, isnull, issort, type}) {
             <Card
               elevation={0}
               sx={{
-                backgroundImage: {`url('${e.img}')`},
+                backgroundImage: `url('${e.img}')`,
                 backgroundSize: "100% 100%",
                 backgroundPosition: "center",
                 aspectRatio: 2.66667 / 1,
@@ -114,6 +114,7 @@ export default function Cards({data, setsort, isnull, issort, type}) {
             </Card>
 
             {/* Info Card */}
+
             <Card elevation={0} sx={{ marginTop: "1em" }}>
               <Typography
                 variant="h5"
