@@ -125,14 +125,14 @@ const drawerContent = (
       <IconButton sx={{ml: '80%'}}>
         <CloseIcon />
       </IconButton>
-      <List>
+      <List >
         
-        <ListItem  button>
+        <ListItem sx={{marginTop: "10em"}}  button>
           <LockOpenIcon />
 
           <span style={{marginLeft: "1em", fontSize: "1rem", fontWeight: 400}}>Sign in</span>
         </ListItem>
-        <ListItem button>
+        <ListItem sx={{marginTop: "20em"}} button>
           <ListItemText primary="Add your restaurant" primaryTypographyProps={{
       sx: {
         fontSize: '80%', // smaller font size
@@ -157,7 +157,7 @@ const drawerContent = (
     }} />
         </ListItem>
       </List>
-      <Box>
+      <Box sx={{marginTop:"20em"}}>
         <Box sx={{display: "flex", width: "90%"}}>
           <img /> 
           <span>Experience the
