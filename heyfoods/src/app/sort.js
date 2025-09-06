@@ -63,13 +63,12 @@ let data = filteredVendors;
               <span className="jss354 jss378">Items (0)</span>
             </Button>
       </Box>
-      <Container sx={{paddingLeft:{xs:"0rem", sm: "3em"}}}>
-
+  <Box sx={{paddingLeft:{xs:"0rem", sm: "3em"}}}>
      
 <Typography variant="h5" sx={{fontWeight: 500, fontSize: {sm:"1.2em", xs: "0.9em"}, color:"black" }}>
   Restaurants search results for {'"'+searchQuery+'"'}
 </Typography>
-</Container>
+</Box>
        <Box sx={{width:"100%",height:"max-content"}}>
 <List sx={{ width: "100%" }}>
   {data !== null &&
