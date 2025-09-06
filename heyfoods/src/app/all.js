@@ -61,7 +61,7 @@ export default function Cards({data, setsort, isnull, issort, type}) {
             <Card
               elevation={0}
               sx={{
-                backgroundImage: `url('${e.img}')`,
+                backgroundImage: {`url('${e.img}')`},
                 backgroundSize: "100% 100%",
                 backgroundPosition: "center",
                 aspectRatio: 2.66667 / 1,
