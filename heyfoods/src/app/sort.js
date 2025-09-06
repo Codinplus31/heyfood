@@ -66,7 +66,7 @@ let data = filteredVendors;
       <Container>
 
      
-<Typography variant="h5" sx={{fontWeight: 500, fontSize: {sm:"1.2em", xs: "0.9em"}, color:"black", }}>
+<Typography variant="h5" sx={{fontWeight: 500, fontSize: {sm:"1.2em", xs: "0.9em"}, pl: {sm: "3em"}, color:"black", }}>
   Restaurants search results for {'"'+searchQuery+'"'}
 </Typography>
 </Container>
@@ -81,7 +81,7 @@ let data = filteredVendors;
           borderBottom: "1px solid #efefef",
           alignItems: "center",
           gap:"2em",
-          paddingLeft: {xs:"1em",sm:"2em"},
+          paddingLeft: {xs:"1em",sm:"3em"},
           "&:hover": {
             background: "#e6e6e6",
           },
