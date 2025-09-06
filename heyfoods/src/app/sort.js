@@ -10,7 +10,10 @@ import {
   FormControl,
   FormLabel,
   Stack,
-  Container
+  Container,
+  ListItemText,
+  List,
+  ListItemIcon
 } from "@mui/material";
 
 export default function Sort(){
@@ -57,7 +60,30 @@ export default function Sort(){
       </Box>
 
        <Box sx={{width:"100%",height:"max-content"}}>
+<List sx={{width: "100%"}}>
 
+      {data !== null && data.tags.map((e,i)=> (<ListItem key={i} sx={{height: "70px", borderBottom: "1px solid #efefef", "&:hover": {
+        background: "#e6e6e6"
+      }}} button>
+        <ListItemIcon>
+          <img
+            src="./fork.svg"
+            alt="rider"
+            style={{ width: 50, height: 64 }}
+          />
+        </ListItemIcon>
+        <ListItemText
+          primary={e.name}
+          primaryTypographyProps={{
+            sx: {
+              fontSize: "80%",
+              fontWeight: "bold",
+            },
+          }}
+        />
+      </ListItem>))}
+
+    </List>
       </Box>
   </Container>             
 )
