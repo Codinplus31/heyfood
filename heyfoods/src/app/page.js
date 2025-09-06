@@ -393,11 +393,11 @@ const nativeVendors = filterVendorsByTag(data, "Native corner");
         </>
       )}
       
-    </Box></>:       ""}
+    </Box></>:      
         
-      {/* <Searched searchQuery={searchQuery} setSearchQuery={setSearchQuery} filteredVendors={filteredVendors} setFilteredVendors={setFilteredVendors} data={data}/> */} 
-
-      {mainsort ?
+      <Searched searchQuery={searchQuery} setSearchQuery={setSearchQuery} filteredVendors={filteredVendors} setFilteredVendors={setFilteredVendors} data={data}/> 
+       }
+          {mainsort ?
       <Allsort data={sortdata} setsort={setmsort} type={1} isnull={data} issort={mainsort}/>: 
 
        <Main /> 
