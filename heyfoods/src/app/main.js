@@ -146,7 +146,7 @@ console.log(groupedByGenre);*/
 
 
     </Stack>
-        <Searched />
+        <Searched data={data}/>
     </div>
   );
 }

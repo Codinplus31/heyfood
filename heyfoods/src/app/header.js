@@ -222,7 +222,7 @@ const SearchContent = ()=> (
 
       {data !== null && data.tags.map((e,i)=> (<ListItem key={i} sx={{height: "70px", borderBottom: "1px solid #efefef", "&:hover": {
         background: "#e6e6e6"
-      }}} button>
+      }}} button="true">
         <ListItemIcon>
           <img
             src="./fork.svg"
@@ -245,8 +245,42 @@ const SearchContent = ()=> (
       
     </Box>
   );
-        
+}
 
+  function filterVendorsBySearch(vendors, query) {
+      if (!query.trim()) return vendors.map(v => ({ ...v, matchedVia: 'all' }));
+
+        const lowerQuery = query.toLowerCase().trim();
+          const results = [];
+
+            vendors.forEach(vendor => {
+                const nameMatch = vendor.name.toLowerCase().includes(lowerQuery);
+                    const tagMatches = vendor.tag.filter(tag => 
+                          tag.toLowerCase().includes(lowerQuery)
+                              );
+
+                                  if (nameMatch) {
+                                        results.push({
+                                                ...vendor,
+                                                        matchedVia: 'name',
+                                                                matchedValue: vendor.name
+                                                                      });
+                                                                          }
+
+                                                                              if (tagMatches.length > 0) {
+                                                                                    tagMatches.forEach(tag => {
+                                                                                            results.push({
+                                                                                                      ...vendor,
+                                                                                                                matchedVia: 'tag',
+                                                                                                                          matchedValue: tag
+                                                                                                                                  });
+                                                                                                                                        });
+                                                                                                                                            }
+                                                                                                                                              });
+
+                                                                                                                                                return results;
+                                                                                                                                                }
+  
 
   return (
     <div id="theAppBarId" style={{width: "100vw", borderBottom: "2px solid rgba(150, 150, 150, 0.1)"}}>

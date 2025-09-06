@@ -4,6 +4,7 @@ import React, {useState} from 'react';
 import {
   Box,
   Typography,
+  Button,
   Radio,
   RadioGroup,
   FormControlLabel,
@@ -13,14 +14,16 @@ import {
   Container,
   ListItemText,
   List,
+  Card,
+  ListItem,
   ListItemIcon
 } from "@mui/material";
 
 export default function Sort({data}){
 
     return (
-   <Container>   
-      <Box sx={{width: "100%", display: {xs:"flex", sm:"block"}, justifyContent:{xs:"center", sm: "flex-start"}, alignItems: "center", padding: "2em 2em", borderBottom: "2px solid rgba(150, 150, 150, 0.1)", }}>
+   <Box> 
+      <Box sx={{width: "100%", height: ",max-content", display: {xs:"flex", sm:"flex"}, justifyContent:{xs:"center", sm: "flex-start"}, alignItems: "flex-end", paddingLeft: {xs:"0rem", sm: "3em"}}}>
             <Button
               variant="text"
               disableElevation
@@ -30,9 +33,9 @@ export default function Sort({data}){
               
               color: 'black',
                   padding: "1.4em 2.7em",
-                  marginRight: "12px",
+                  borderRadius:"0px",
               borderBottom:"2px solid green",
-              minWidth:{xs: "50%", sm: "64px"},
+              minWidth: {xs:"65%", sm: "64px"},
               '&:hover': {
                 bgcolor: 'gray', // Uses green from theme
               }
@@ -43,55 +46,61 @@ export default function Sort({data}){
             </Button>
             <Button
               variant="text"
+              disableElevation
               color="inherit"
-              startIcon={<svg width="24" height="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M19.2811 11.0837C17.9488 11.0837 16.8615 9.99631 16.8615 8.66406C16.8615 9.99631 15.7741 11.0837 14.4419 11.0837C13.1096 11.0837 12.0027 9.99631 12.0027 8.66406C12.0027 9.99631 10.9154 11.0837 9.58312 11.0837C8.25087 11.0837 7.16352 9.99631 7.16352 8.66406C7.16352 9.99631 6.07618 11.0837 4.74393 11.0837C3.41169 11.0837 2.28516 9.99631 2.28516 8.66406V22.5694C2.28516 23.3481 2.93169 23.9996 3.71536 23.9996H20.2852C21.0639 23.9996 21.7154 23.353 21.7154 22.5694V8.66406C21.7154 10.0012 20.6329 11.0837 19.2811 11.0837ZM12.0027 20.3065C8.68679 20.3065 6.19373 19.1065 6.19373 17.5049C6.19373 15.9032 8.68679 14.7032 12.0027 14.7032C15.3186 14.7032 17.8117 15.9032 17.8117 17.5049C17.8117 19.1065 15.3186 20.3065 12.0027 20.3065Z" fill="black"></path><path d="M15.8872 8.66453H17.8317C17.8317 9.4629 18.5713 10.3396 19.6979 10.0751V2.5127H13.5068V9.79106C14.8146 10.7902 15.9901 9.44331 15.8872 8.66453Z" fill="black"></path><path d="M6.17369 8.66449H8.11818C8.11818 9.46286 8.76471 10.129 9.58267 10.129C10.381 10.129 11.0472 9.48245 11.0472 8.66449H11.8847V3.77143C11.8651 1.69469 10.19 0 8.09369 0C6.01696 0 4.32227 1.69469 4.32227 3.77143V10.0751C5.4439 10.3494 6.17369 9.46775 6.17369 8.66449Z" fill="black"></path></svg>}
+             // startIcon={<svg width="24" height="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M19.2811 11.0837C17.9488 11.0837 16.8615 9.99631 16.8615 8.66406C16.8615 9.99631 15.7741 11.0837 14.4419 11.0837C13.1096 11.0837 12.0027 9.99631 12.0027 8.66406C12.0027 9.99631 10.9154 11.0837 9.58312 11.0837C8.25087 11.0837 7.16352 9.99631 7.16352 8.66406C7.16352 9.99631 6.07618 11.0837 4.74393 11.0837C3.41169 11.0837 2.28516 9.99631 2.28516 8.66406V22.5694C2.28516 23.3481 2.93169 23.9996 3.71536 23.9996H20.2852C21.0639 23.9996 21.7154 23.353 21.7154 22.5694V8.66406C21.7154 10.0012 20.6329 11.0837 19.2811 11.0837ZM12.0027 20.3065C8.68679 20.3065 6.19373 19.1065 6.19373 17.5049C6.19373 15.9032 8.68679 14.7032 12.0027 14.7032C15.3186 14.7032 17.8117 15.9032 17.8117 17.5049C17.8117 19.1065 15.3186 20.3065 12.0027 20.3065Z" fill="black"></path><path d="M15.8872 8.66453H17.8317C17.8317 9.4629 18.5713 10.3396 19.6979 10.0751V2.5127H13.5068V9.79106C14.8146 10.7902 15.9901 9.44331 15.8872 8.66453Z" fill="black"></path><path d="M6.17369 8.66449H8.11818C8.11818 9.46286 8.76471 10.129 9.58267 10.129C10.381 10.129 11.0472 9.48245 11.0472 8.66449H11.8847V3.77143C11.8651 1.69469 10.19 0 8.09369 0C6.01696 0 4.32227 1.69469 4.32227 3.77143V10.0751C5.4439 10.3494 6.17369 9.46775 6.17369 8.66449Z" fill="black"></path></svg>}
 
               sx={{
-              
+              borderRadius:"0rem",
               color: 'black',
                   padding: "1.4em 2.7em",
-                borderBottom:"2px solid green",
-              minWidth: {xs: "50%", sm:"64px"}
+                borderBottom:"2px solid gray",
+              minWidth: {xs: "65%", sm:"64px"},
+              fontSize: "0.9em"
               
             }}
             >
-              <span className="jss354 jss378">Grocery</span>
+              <span className="jss354 jss378">Items (0)</span>
             </Button>
       </Box>
 
        <Box sx={{width:"100%",height:"max-content"}}>
 <List sx={{ width: "100%" }}>
   {data !== null &&
-    data.tags.map((e, i) => (
+    data.restaurants.map((e, i) => (
       <ListItem
         key={i}
         sx={{
           height: "auto",
           borderBottom: "1px solid #efefef",
-          alignItems: "flex-start",
+          alignItems: "center",
+          gap:"2em",
+          paddingLeft: {xs:"1em",sm:"3em"},
           "&:hover": {
             background: "#e6e6e6",
           },
         }}
-        button
+        button="true"
       >
         <ListItemIcon>
           <img
-            src={"https://heyfood-backend.vercel.app"+e.img}
+            src={e.img}
             alt="rider"
-            style={{ width: 50, height: 64 }}
+            style={{ width: 100, height:80
+             }}
           />
         </ListItemIcon>
 
         <ListItemText
           primary={
-            <Card elevation={0} sx={{ marginTop: "1em" }}>
+            <Card elevation={0} sx={{background: "transparent"}}>
               <Typography
                 variant="h5"
                 sx={{
                   fontWeight: 500,
                   color: "black",
                   marginBottom: "0.3em",
+                  fontSize: {xs: "1em", sm:"100%"}
                 }}
                 noWrap
               >
@@ -135,7 +144,7 @@ export default function Sort({data}){
                   </svg>
                   <span>{e.stars}</span>
                 </div>
-                <span>{e.rating}+ Ratings</span>
+                <span>{Number(e.rating).toFixed(1)}+ Ratings</span>
               </Box>
             </Card>
           }
@@ -144,6 +153,6 @@ export default function Sort({data}){
     ))}
 </List>
       </Box>
-  </Container>             
+  </Box>             
 )
 }
