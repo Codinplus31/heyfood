@@ -26,6 +26,26 @@ const geistMono = Geist_Mono({
 // };
 
 export default function RootLayout({ children }) {
+  window.addEventListener("error", (event) => {
+      reportError({
+        type: "error",
+        message: event.message,
+        file: event.filename,
+        line: event.lineno,
+        column: event.colno,
+        stack: event.error?.stack,
+      });
+    });
+
+window.addEventListener("unhandledrejection", (event) => {
+      reportError({
+        type: "unhandledrejection",
+        message: event.reason?.message || "Unhandled rejection",
+        stack: event.reason?.stack || event.reason,
+      });
+    });
+  }, []);
+  
   return (
     <html lang="en">
       <head>
