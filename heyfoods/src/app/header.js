@@ -73,7 +73,7 @@ export default function Header() {
 const [drawerOpen, setDrawerOpen] = useState(false); // <-- Drawer state
   const [sortKey, setSortKey] = useState("Most Popular");
  const [sortclick, setsortclick] = useState(false);
- const {mainsort, setmsort, sortdata, data, setsortdata} = useContext(MyContext)
+ const {searchQuery, setSearchQuery, mainsort, setmsort, sortdata, data, setsortdata, filteredVendors, setFilteredVendors} = useContext(MyContext)
   const toggleDrawer = (open) => (event) => {
     if (event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
       return;
@@ -248,45 +248,27 @@ const SearchContent = ()=> (
                                               
   
 
+
 function filterVendorsBySearch(vendors, query) {
-    if (!query.trim()) return vendors.map(v => ({ ...v, matchedVia: 'all' }));
+    if (!query.trim()) return vendors;
 
-    const lowerQuery = query.toLowerCase().trim();
-    const results = [];
+      const lowerQuery = query.toLowerCase().trim();
 
-     vendors.forEach(vendor => {
-            
-    const nameMatch = vendor.name.toLowerCase().includes(lowerQuery);
-    const tagMatches = vendor.tag.filter(tag => 
-    tag.toLowerCase().includes(lowerQuery));
-
-    if (nameMatch) {
-      results.push({
-        ...vendor,
-        matchedVia: 'name',
-        matchedValue: vendor.name
-      });
-    }
-
-  if (tagMatches.length > 0) {
-     tagMatches.forEach(tag => {
-    results.push({
-    ...vendor,
-    matchedVia: 'tag',
-   matchedValue: tag
-   })
-  });
-  }
-  });
-    return results;
-}
+       return vendors.filter(vendor => {
+        const nameMatch = vendor.name.toLowerCase().includes(lowerQuery);
+        const tagMatch = vendor.tag.some(tag => 
+        tag.toLowerCase().includes(lowerQuery)
+         );
+          return nameMatch || tagMatch;
+        });
+        }
 
 
 
-    const [searchQuery, setSearchQuery] = useState("");
+    //const [searchQuery, setSearchQuery] = useState("");
 
     // Filtered vendors (result of search)
-    const [filteredVendors, setFilteredVendors] = useState([]);                                                                                                                        
+                                                                                                                     
 
 /*useEffect(() => {
   if(data !== null){
@@ -298,7 +280,9 @@ function filterVendorsBySearch(vendors, query) {
 const handleSearchSubmit = () => {
   if(data !== null){
     const results = filterVendorsBySearch(data?.restaurants, searchQuery);
-      setFilteredVendors(results);
+      setsearchenter(false)
+     // alert(JSON.stringify(results))
+    setFilteredVendors(results);
 }
 };
 
@@ -343,8 +327,8 @@ const handleSearchSubmit = () => {
   }}
   onClick={() => setsearchenter(true)}
   className="jss285"
-  sx={{ borderRadius: "12rem", overflow: "hidden", width: "100%" }}
->
+sx={{borderRadius: "12rem", overflow:"hidden", width: searchenter === true ? "60%" : "15%", display: {xs: "none", sm: "block"} }}>
+
   <InputBase
     id="nonMobileSearchId"
     placeholder="Search restaurants or food"
@@ -434,13 +418,13 @@ const handleSearchSubmit = () => {
   <Box
   component="form"
   onSubmit={(e) => {
+    alert("yes")
     e.preventDefault(); // Prevent page reload
     handleSearchSubmit(); // Trigger search
   }}
   onClick={() => setsearchenter(true)}
-  className="jss285"
-  sx={{ borderRadius: "12rem", overflow: "hidden", width: "100%" }}
->
+  sx={{borderRadius: "12rem", overflow:"hidden", width: searchenter === true ? "80%" : "80%", display: {xs: "block", sm: "none"} }}>
+
   <InputBase
     id="nonMobileSearchId"
     placeholder="Search restaurants or food"

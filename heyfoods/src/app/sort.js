@@ -19,8 +19,8 @@ import {
   ListItemIcon
 } from "@mui/material";
 
-export default function Sort({data}){
-
+export default function Sort({searchQuery, setSearchQuery, filteredVendors, setFilteredVendors}){
+let data = filteredVendors;
     return (
    <Box> 
       <Box sx={{width: "100%", height: ",max-content", display: {xs:"flex", sm:"flex"}, justifyContent:{xs:"center", sm: "flex-start"}, alignItems: "flex-end", paddingLeft: {xs:"0rem", sm: "3em"}}}>
@@ -63,11 +63,17 @@ export default function Sort({data}){
               <span className="jss354 jss378">Items (0)</span>
             </Button>
       </Box>
+      <Container>
 
+     
+<Typography variant="h5" sx={{fontWeight: 500, fontSize: "1.2em", color:"black", }}>
+  Restaurants search results for "{searchQuery}"
+</Typography>
+</Container>
        <Box sx={{width:"100%",height:"max-content"}}>
 <List sx={{ width: "100%" }}>
   {data !== null &&
-    data.restaurants.map((e, i) => (
+    data.map((e, i) => (
       <ListItem
         key={i}
         sx={{

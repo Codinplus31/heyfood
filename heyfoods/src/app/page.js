@@ -27,7 +27,9 @@ const [mainsort, setmsort] = useState(false);
 const bannerRef = useRef(null);
   const isMobile = useMediaQuery('(max-width:600px)');
 const [currentSlide, setCurrentSlide] = useState(0);
-
+const [filteredVendors, setFilteredVendors] = useState([]);
+const [searchQuery, setSearchQuery] = useState("")
+  
   const [sliderRef, slider] = useKeenSlider({
     slides: { perView: 1, spacing: 16 },
     mode: 'free',
@@ -106,9 +108,11 @@ const nativeVendors = filterVendorsByTag(data, "Native corner");
   
 
   return (
-       <MyContext.Provider value={{ data, setdata, sortdata, setsortdata, mainsort, setmsort }}>
+       <MyContext.Provider value={{ searchQuery, setSearchQuery, data, setdata, sortdata, setsortdata, mainsort, setmsort, filteredVendors, setFilteredVendors}}>
       <Box sx={{width: {xs:"100vw", sm: "100vw"}, overflowX:"hidden", display: "flex", alignItems: "center",  flexDirection: "column"}}>
       <Header/>
+      {searchQuery === "" ? 
+      <>
       <Container sx={{width: "100%", display: {xs:"flex", sm:"block"}, justifyContent:{xs:"center", sm: "flex-start"}, alignItems: "center", padding: "2em 2em", borderBottom: "2px solid rgba(150, 150, 150, 0.1)", }}>
             <Button
               variant="contained"
@@ -387,7 +391,9 @@ const nativeVendors = filterVendorsByTag(data, "Native corner");
           </IconButton>
         </>
       )}
-    </Box>
+      
+    </Box></>:         <Searched searchQuery={searchQuery} setSearchQuery={setSearchQuery} filteredVendors={filteredVendors} setFilteredVendors={setFilteredVendors} data={data}/>
+}
       {mainsort ?
       <Allsort data={sortdata} setsort={setmsort} type={1} isnull={data} issort={mainsort}/>: 
 
@@ -395,6 +401,8 @@ const nativeVendors = filterVendorsByTag(data, "Native corner");
       
     }
      </Box>
+     
+     
        </MyContext.Provider>
     
   );

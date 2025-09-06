@@ -20,7 +20,7 @@ import All from './all.js';
 import { MyContext } from './page.js';
 
 export default function StoreFilter() {
-  const { data } = useContext(MyContext);
+  const { data, filteredVendors, setFilteredVendors, searchQuery, setSearchQuery } = useContext(MyContext);
   const [groupedByGenre, setgroup] = useState(null)
   const [sort, setsort] = useState(false);
   const [sortdata, setsortdata] = useState(null)
@@ -144,9 +144,7 @@ console.log(groupedByGenre);*/
       {sort === false && <All data={data?.restaurants} type={null} setsort={setsort} issort={sort} isnull={data}/>}
       </Box>
 
-
-    </Stack>
-        <Searched data={data}/>
-    </div>
+</Stack>
+</div>
   );
 }
