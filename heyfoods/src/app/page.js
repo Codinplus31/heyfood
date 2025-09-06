@@ -184,7 +184,7 @@ const nativeVendors = filterVendorsByTag(data, "Native corner");
             }}
             
           >
-            <img
+            <Image
               src={"https://heyfood-backend.vercel.app"+tag.img}
               alt={tag.name}
               style={{ width: 40, height: 40, marginBottom: 4 }}
@@ -243,7 +243,7 @@ const nativeVendors = filterVendorsByTag(data, "Native corner");
                 aspectRatio: 2.435 / 1,
               }}
             >
-              <img
+              <Image
                 src={e}
                 alt={`banner-${i}`}
                 style={{ width: '100%', height: '100%', objectFit: 'cover', borderRadius: '0.6em' }}
