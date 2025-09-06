@@ -14,6 +14,7 @@ import {
 } from "@mui/material";
 
 import Cards from "./card.js"
+import Searched from "./sort.js"
 // import Sort from "./sort.js"
 import All from './all.js';
 import { MyContext } from './page.js';
@@ -145,6 +146,7 @@ console.log(groupedByGenre);*/
 
 
     </Stack>
+        <Searched />
     </div>
   );
 }
