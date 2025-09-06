@@ -220,7 +220,15 @@ const SearchContent = ()=> (
       
         <List sx={{width: "100%"}}>
 
-      {data !== null && data.tags.map((e,i)=> (<ListItem key={i} sx={{height: "70px", borderBottom: "1px solid #efefef", "&:hover": {
+      {data !== null && data.tags.map((e,i)=> (<ListItem onClick={()=> {
+if(data !== null){
+    const results = filterVendorsBySearch(data?.restaurants, e.name);
+      setsearchenter(false)
+     // alert(JSON.stringify(results))
+    setFilteredVendors(results);
+}
+        
+      }} key={i} sx={{height: "70px", borderBottom: "1px solid #efefef", "&:hover": {
         background: "#e6e6e6"
       }}} button="true">
         <ListItemIcon>
