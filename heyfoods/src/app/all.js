@@ -8,7 +8,7 @@ import {
   Container 
 } from "@mui/material";
 
-export default function Cards({data, setsort, isnull, issort}) {
+export default function Cards({data, setsort, isnull, issort, type}) {
   let dumb = [0, 0, 0, 0, 0, 0];
 
   return (
@@ -19,11 +19,11 @@ export default function Cards({data, setsort, isnull, issort}) {
         justifyContent="space-between"
         sx={{ width: "100%", margin: "0 auto" }}
       >
-         <Box sx={{display: "flex", gap: "2em"}}>
+         <Box sx={{display: "flex", alignItems: "center", gap: "2em"}}>
         <Typography variant="h4" sx={{ fontSize: {xs: "120%", sm:"175%"}, fontWeight: 600 }}>
           {issort ===true && isnull !== null ? data.length + " Store near you":"All Restaurants"}
         </Typography>
-          {issort === true ? <Button onClick={()=> setsort(false)} variant="text" color="error">Reset</Button>: ""}
+          {issort === true ? <Button sx={{textTransform: "none", fontWeight: "600"}} onClick={()=> setsort(false)} variant="text" color="error">Reset</Button>: ""}
         </Box>
         {isnull !== null && issort === false && <Button variant="text" sx={{ color: "black", textTransform: "none" }}>
           See all
@@ -37,18 +37,15 @@ export default function Cards({data, setsort, isnull, issort}) {
             gridTemplateColumns: {
               xs: "1fr",              // mobile ≤600px → 1 column
               sm: "repeat(2, 1fr)",   // ≥600px → 2 columns
-              md: "repeat(2, 1fr)",   // ≥900px still 2 columns
+              md: type == 2 || type === null ? "repeat(2, 1fr)" : "repeat(3, 1fr)",   // ≥900px still 2 columns
               lg: "repeat(3, 1fr)",   // ≥1300px → 3 columns
             },
             gap: "1.5em",
             marginTop: "20px",
             flex: "0 0 auto", // prevent shrinking
-            flexBasis: { xs: "48%", lg: "26.5vw" },
+            flexBasis: { xs: "48%", md: "29vw", lg: "17.5vw" },
             //mr: { xs: "1em", lg: "2em" },
            //  width: {sm:"95%"}
-           
-            
-            
           }}>
         {isnull !== null && data.map((e, index) => (
           <Card

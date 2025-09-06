@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
 import IconButton from '@mui/material/IconButton';
@@ -13,6 +13,7 @@ import Badge from '@mui/material/Badge';
 import { InputAdornment, Drawer, List, ListItem, ListItemText, Divider, Radio,
   RadioGroup,
   FormControlLabel,
+  Container,
   FormControl,
   FormLabel, Stack } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
@@ -65,18 +66,54 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
     width: '20ch',
   },
 }));
-
+import { MyContext } from './page';
 export default function Header() {
   const [searchValue, setSearchValue] = useState('');
 const [drawerOpen, setDrawerOpen] = useState(false); // <-- Drawer state
   const [sortKey, setSortKey] = useState("Most Popular");
- const [sortclick, setsortclick] = useState(false)
+ const [sortclick, setsortclick] = useState(false);
+ const {mainsort, setmsort, sortdata, data, setsortdata} = useContext(MyContext)
   const toggleDrawer = (open) => (event) => {
     if (event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
       return;
     }
     setDrawerOpen(open);
   };
+  
+
+  useEffect(() => {
+    if(data !== null){
+    let sorted = [...data?.restaurants]; // Always start with a copy
+
+      if (sortKey === "Most Rated") {
+          // Sort by stars (desc)
+              sorted = sorted.sort((a, b) => Number(b.stars) - Number(a.stars));
+                }
+                  else if (sortKey === "Highest rated") {
+                      // Sort by rating (desc)
+                          sorted = sorted.sort((a, b) => Number(b.rating) - Number(a.rating));
+                            }
+                              else if (sortKey === "Newest") {
+                                  // Sort by created_at (newest first) — DESC by date
+                                      sorted = sorted.sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
+                                        }
+                                          else if (sortKey === "Most Popular") {
+                                              // Sort by stars DESC, then rating DESC as tiebreaker
+                                                  sorted = sorted.sort((a, b) => {
+                                                        const starDiff = Number(b.stars) - Number(a.stars);
+                                                              if (starDiff !== 0) return starDiff;
+                                                                    return Number(b.rating) - Number(a.rating);
+                                                                        });
+                                                                          }
+                                                                            else if (sortKey === "Nearest") {
+                                                                                // 📍 Placeholder — implement geolocation sort later
+                                                                                    // For now, leave unsorted or sort by name or ID
+                                                                                        console.log("Nearest sorting not implemented yet");
+                                                                                          }
+
+                                                                                            setsortdata(sorted);
+                                                                                        }
+                                                                                            }, [sortKey, data]);
 
 const drawerContent = (
     <Box
@@ -309,7 +346,7 @@ Heyfood mobile app</span>
         {drawerContent}
       </Drawer>
 
-      <Box sx={{ p: 2, width: "100%", height: sortclick == true ? "max-content" : "0px", display: {
+      <Container sx={{width: "100%", height: sortclick == true ? "max-content" : "0px", display: {
       xs: sortclick == true ? "block" : "none",
       sm:"none"
     }, overflowY: "hidden", position: "absolute", top:"18%", zIndex: 999, left: "0px", overflow: "hidden", background: "white" }}>
@@ -317,11 +354,11 @@ Heyfood mobile app</span>
       <Box  sx={{width: "100%", display: "flex", justifyContent: "center", alignItems: "center", background: "white", marginTop: "2px"}} >
       <Box sx={{width: "100%",  display: "flex", justifyContent: "space-between", alignItems: "center"}} >
         <Box >
-        <img src="/icons/new/sort-desc.svg" alt="sort" />
+        <img src="filter.svg" alt="sort" />
         <Typography variant="h5" sx={{fontWeight: 800}}>Sort</Typography>
         </Box>
-        <IconButton>
-          <img src="/updown.svg" />
+        <IconButton onClick={()=> setsortclick(false)}>
+          <CloseIcon />
         </IconButton>
       </Box>
       </Box>
@@ -330,7 +367,9 @@ Heyfood mobile app</span>
         <RadioGroup
           name="sortKey"
           value={sortKey}
-          onChange={(e) => setSortKey(e.target.value)}
+          onChange={(e) => {
+          setmsort(true)
+          setSortKey(e.target.value)}}
         >
           <FormControlLabel
             value="Most Popular"
@@ -351,7 +390,7 @@ Heyfood mobile app</span>
           />
         </RadioGroup>
       </FormControl>
-    </Box>
+    </Container >
     </div>
   );
 }

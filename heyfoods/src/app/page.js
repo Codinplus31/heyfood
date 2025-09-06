@@ -31,9 +31,26 @@ const [currentSlide, setCurrentSlide] = useState(0);
   const [sliderRef, slider] = useKeenSlider({
     slides: { perView: 1, spacing: 16 },
     mode: 'free',
-    slideChanged(s) {
-      setCurrentSlide(s.track.details.rel);
-    },
+    rubberband: true,
+    dragStart() {}, // optional
+      created(s) {
+            const updateDot = () => {
+                  if (!s) return;
+                        const progress = s.track.details.progress; // 0 → 1
+                              const totalSlides = s.track.details.slides.length;
+
+                                    // fractional index, scaled to total slides
+                                          const fractionalIndex = progress * totalSlides;
+
+                                                // clamp between 0 and totalSlides - 1
+                                                      const idx = Math.min(Math.floor(fractionalIndex), totalSlides - 1);
+
+                                                            setCurrentSlide(idx);
+                                                                  requestAnimationFrame(updateDot); // continuous update
+                                                                      };
+                                                                          requestAnimationFrame(updateDot);
+                                                                            },
+      
   });
 let dummy = [0,0,0,0,0,0,0]
 useEffect(() => {
@@ -89,8 +106,8 @@ const nativeVendors = filterVendorsByTag(data, "Native corner");
   
 
   return (
-       <MyContext.Provider value={{ data, setdata }}>
-      <Box sx={{width: {xs:"100vw", sm: "100vw"}, border:"1px solid red", overflowX:"hidden", display: "flex", alignItems: "center",  flexDirection: "column"}}>
+       <MyContext.Provider value={{ data, setdata, sortdata, setsortdata, mainsort, setmsort }}>
+      <Box sx={{width: {xs:"100vw", sm: "100vw"}, overflowX:"hidden", display: "flex", alignItems: "center",  flexDirection: "column"}}>
       <Header/>
       <Container sx={{width: "100%", display: {xs:"flex", sm:"block"}, justifyContent:{xs:"center", sm: "flex-start"}, alignItems: "center", padding: "2em 2em", borderBottom: "2px solid rgba(150, 150, 150, 0.1)", }}>
             <Button
@@ -372,7 +389,7 @@ const nativeVendors = filterVendorsByTag(data, "Native corner");
       )}
     </Box>
       {mainsort ?
-      <Allsort data={sortdata} setsort={setmsort} isnull={data} issort={mainsort}/>: 
+      <Allsort data={sortdata} setsort={setmsort} type={1} isnull={data} issort={mainsort}/>: 
 
        <Main /> 
       

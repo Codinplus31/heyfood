@@ -98,7 +98,7 @@ console.log(groupedByGenre);*/
       </Stack>
 
       <Stack direction="row" spacing={1} alignItems="center" mt={2}>
-        <img src="/icons/new/sort-desc.svg" alt="sort" />
+        <img src="filter.svg" alt="sort" />
         <Typography variant="h5" sx={{fontWeight: 800}}>Sort</Typography>
       </Stack>
 
@@ -133,14 +133,14 @@ console.log(groupedByGenre);*/
     </Box> 
     <Box sx={{width: {xs: "100%", sm:"80%"}}}>
       {sort ? 
-      <All data={sortdata} setsort={setsort} issort={sort} isnull={data}/>: 
+      <All type={2} data={sortdata} setsort={setsort} issort={sort} isnull={data}/>: 
     groupedByGenre !== null && groupedByGenre?.map(((e,i)=> (
         
         <Cards data={e} key={i}/>
       )))
       }
 
-      {sort === false && <All data={data?.restaurants} setsort={setsort} issort={sort} isnull={data}/>}
+      {sort === false && <All data={data?.restaurants} type={null} setsort={setsort} issort={sort} isnull={data}/>}
       </Box>
 
 
