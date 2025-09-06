@@ -323,7 +323,7 @@ const SearchContent = ()=> (
         </IconButton> */}
 
         {/* Sign In & Cart */}
-        <Box className="jss289 jss290" sx={{display: {xs:"flex",sm:searchenter == true ? "none": 'flex'}, alignItems: 'center', gap: 4}}>
+        <Box className="jss289 jss290" sx={{display: {xs:"none",sm:searchenter == true ? "none": 'flex'}, alignItems: 'center', gap: 4}}>
           <Button variant="text" color="inherit" sx={{color: 'black', fontWeight: 400,}}>
             <Typography variant="body2" className="jss378">
               Sign In
