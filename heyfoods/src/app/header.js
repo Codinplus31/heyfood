@@ -10,7 +10,7 @@ import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import InputBase from '@mui/material/InputBase';
 import Badge from '@mui/material/Badge';
-import { InputAdornment, Drawer, List, ListItem, ListItemText, Divider, Radio,
+import { InputAdornment, Drawer, List, ListItem, ListItemText, ListItemIcon, Divider, Radio,
   RadioGroup,
   FormControlLabel,
   Container,
@@ -69,6 +69,7 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 import { MyContext } from './page';
 export default function Header() {
   const [searchValue, setSearchValue] = useState('');
+  const [searchenter, setsearchenter] = useState(false)
 const [drawerOpen, setDrawerOpen] = useState(false); // <-- Drawer state
   const [sortKey, setSortKey] = useState("Most Popular");
  const [sortclick, setsortclick] = useState(false);
@@ -207,47 +208,30 @@ Heyfood mobile app</span>
     </Box>
   );
 
-const SearchContent = (
+const SearchContent = ()=> (
     <Box
-      sx={{ width: "100%", position: "absolute", top:"18%", zIndex: 999, left: "0px"}}
+      sx={{ width: "100%", display:searchenter == true ? "block":"none",height: "100%", overflowY:"scroll", position: "absolute", top:{sm:"4%",xs:"18%"}, zIndex: 999, left: "0px", background: "white"}}
       role="presentation"
-      onClick={toggleDrawer(false)}
-      onKeyDown={toggleDrawer(false)}
+      
     >
-      <Typography variant="h2" >
-        Category
+      <Typography variant="h5" sx={{marginLeft:"0.7em", fontWeight: 690}}>
+        Categories
       </Typography>
       
-        <List>
-      <ListItem button>
-        <ListItemIcon>
-          <img
-            src="/restaurant.png"
-            alt="restaurant"
-            style={{ width: 24, height: 24 }}
-          />
-        </ListItemIcon>
-        <ListItemText
-          primary="Add your restaurant"
-          primaryTypographyProps={{
-            sx: {
-              fontSize: "80%", // smaller font size
-              fontWeight: "bold", // make it bold
-            },
-          }}
-        />
-      </ListItem>
+        <List sx={{width: "100%"}}>
 
-      <ListItem button>
+      {data !== null && data.tags.map((e,i)=> (<ListItem key={i} sx={{height: "70px", borderBottom: "1px solid #efefef", "&:hover": {
+        background: "#e6e6e6"
+      }}} button>
         <ListItemIcon>
           <img
-            src="/rider.png"
+            src="./fork.svg"
             alt="rider"
             style={{ width: 24, height: 24 }}
           />
         </ListItemIcon>
         <ListItemText
-          primary="Become a delivery rider"
+          primary={e.name}
           primaryTypographyProps={{
             sx: {
               fontSize: "80%",
@@ -255,26 +239,8 @@ const SearchContent = (
             },
           }}
         />
-      </ListItem>
+      </ListItem>))}
 
-      <ListItem button>
-        <ListItemIcon>
-          <img
-            src="/home.png"
-            alt="home"
-            style={{ width: 24, height: 24 }}
-          />
-        </ListItemIcon>
-        <ListItemText
-          primary="Go to Homepage"
-          primaryTypographyProps={{
-            sx: {
-              fontSize: "80%",
-              fontWeight: "bold",
-            },
-          }}
-        />
-      </ListItem>
     </List>
       
     </Box>
@@ -284,7 +250,7 @@ const SearchContent = (
 
   return (
     <div id="theAppBarId" style={{width: "100vw", borderBottom: "2px solid rgba(150, 150, 150, 0.1)"}}>
-      <Toolbar className="jss279" sx={{ justifyContent: 'space-between' }}>
+      <Toolbar className="jss279" sx={{ justifyContent:  'space-between' }}>
         <div style={{ display: 'flex', alignItems: 'center',  }} className="jss283">
           {/* Menu Icon */}
           <IconButton edge="start" color="" aria-label="menu"
@@ -304,17 +270,22 @@ const SearchContent = (
             startIcon={<LocationOnIcon width="50" height="50"/>}
             color="inherit"
 
-            sx={{ textTransform: 'none', color: 'black', marginLeft: "1rem" }}
+            sx={{ display:{
+              xs:"flex",
+              lg: searchenter === true ? "none" : "block"
+
+            }, textTransform: 'none', color: 'black', marginLeft: "1rem" }}
           >
             Set Location
           </Button>
         </div>
 
         {/* Search Bar */}
-        <Box className="jss285" sx={{borderRadius: "12rem", overflow:"hidden", width: "15%", display: {xs: "none", sm: "block"} }}>
+        <Box onClick={()=> setsearchenter(true)}className="jss285" sx={{borderRadius: "12rem", overflow:"hidden", width: searchenter === true ? "60%" : "15%", display: {xs: "none", sm: "block"} }}>
           <InputBase
   id="nonMobileSearchId"
   placeholder="Search restaurants or food"
+
   type="search"
   fullWidth
   startAdornment={
@@ -335,7 +306,11 @@ const SearchContent = (
   }}
 />
         </Box>
-
+        
+        
+  <Box onClick={()=> setsearchenter(false)} sx={{display: {xs:"none", lg:searchenter == true ? "block": "none"},width: "60px"}}>
+ <CloseIcon />
+   </Box>
         {/* Close Button (e.g., for mobile) */}
         {/* <IconButton
           edge="end"
@@ -348,8 +323,8 @@ const SearchContent = (
         </IconButton> */}
 
         {/* Sign In & Cart */}
-        <div className="jss289 jss290" style={{ display: 'flex', alignItems: 'center', gap: 16 }}>
-          <Button variant="text" color="inherit" sx={{color: 'black', fontWeight: 400, display: {xs: "none", sm: "block"}}}>
+        <div className="jss289 jss290" style={{ display: {xs:"flex",lg:searchenter == true ? "none": 'flex'}, alignItems: 'center', gap: 16 }}>
+          <Button variant="text" color="inherit" sx={{color: 'black', fontWeight: 400,}}>
             <Typography variant="body2" className="jss378">
               Sign In
             </Typography>
@@ -379,11 +354,17 @@ const SearchContent = (
         </div>
       </Toolbar>
       <Toolbar sx={{justifyContent: "center", gap: "2em", display: {xs: "flex", sm: "none"}}} >
-        <Box className="jss285" sx={{borderRadius: "12rem", overflow:"hidden", width: "100%" }}>
+       
+       {searchenter == true ? 
+       <IconButton sx={{width:"10%"}} onClick={()=> setsearchenter(false)}>
+        <CloseIcon />
+       </IconButton>:""}
+        <Box onClick={()=> setsearchenter(true)} className="jss285" sx={{borderRadius: "12rem", overflow:"hidden", width: "100%" }}>
           <InputBase
   id="nonMobileSearchId"
   placeholder="Search restaurants or food"
   type="search"
+  onClick={()=> setsearchenter(true)}
   fullWidth
   startAdornment={
     <InputAdornment position="end" sx={{ ml: 1 }}>

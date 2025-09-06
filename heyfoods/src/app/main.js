@@ -136,7 +136,7 @@ console.log(groupedByGenre);*/
       <All type={2} data={sortdata} setsort={setsort} issort={sort} isnull={data}/>: 
     groupedByGenre !== null && groupedByGenre?.map(((e,i)=> (
         
-        <Cards data={e} key={i}/>
+        <Cards i={i} data={e} key={i}/>
       )))
       }
 

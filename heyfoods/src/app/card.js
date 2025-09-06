@@ -13,7 +13,7 @@ import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 
 
-export default function Cards({data}) {
+export default function Cards({i, data}) {
   let arr = [0, 0, 0, 0, 0];
 // const vendors = [
 //   {
@@ -96,6 +96,30 @@ function getRestaurantStatus(open_time, close_time) {
     }
   };
 
+  function desc(e){
+  if(e == 0){
+    return "Mouthwatering deals 4 you!"
+  }
+  if(e === 1){
+    return "Enjoy free drinks on your order"
+  }
+  if(e == 2){
+    return "Enjoy free drinks on your order"
+  }
+
+  if(e == 3){
+    return "Best of the best!"
+  }
+
+  if(e == 4){
+    return "Home away from home!"
+  }
+
+  if(e == 5){
+    return "Market runs? No wahala! Shop here!";
+  }
+  }
+
   return (
     <Container sx={{ width: {xs: "100%", sm:"94%"}, marginBottom: "4em" }}>
       <Stack direction="row" justifyContent="space-between">
@@ -107,7 +131,7 @@ function getRestaurantStatus(open_time, close_time) {
                 variant="body2"
                 sx={{ color: "#757575", marginBottom: "0.3em" }}
               >
-                Goat meat, Soup bowl
+               { desc(i)}
               </Typography>
         </Box>
         <Box
